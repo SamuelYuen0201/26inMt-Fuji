@@ -484,6 +484,57 @@
   font-weight: 700;
   color: #1A1A1A;
 }
+/* Cinematic title */
+#fuji26 .f-day-cin {
+  margin-top: 0.55rem;
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(1.05rem, 3vw, 1.45rem);
+  font-weight: 700;
+  color: #1A1A1A;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+#fuji26 .f-day-cin-en {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  color: #39C5BB;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+  opacity: 0.85;
+}
+/* ゆるキャン△ badge */
+#fuji26 .f-yuru {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  padding: 0.12rem 0.55rem;
+  border: 1px solid rgba(57,197,187,0.3);
+  color: #39C5BB;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+  background: rgba(57,197,187,0.04);
+  border-radius: 2px;
+}
+/* ゆるキャン△ callout block */
+#fuji26 .f-yuru-block {
+  margin: 0.8rem 0 0;
+  padding: 0.7rem 0.9rem;
+  border-left: 2px solid #39C5BB;
+  background: rgba(57,197,187,0.04);
+  border-radius: 0 3px 3px 0;
+  font-size: 0.73rem;
+  color: #555;
+  line-height: 1.65;
+}
+#fuji26 .f-yuru-block strong {
+  font-family: 'Shippori Mincho', serif;
+  color: #39C5BB;
+  font-size: 0.78rem;
+}
 
 /* ── TIMELINE ── */
 #fuji26 .f-timeline {
@@ -925,7 +976,6 @@
     <div class="f-circle"></div>
     <div class="f-circle miku" style="width:650px;height:650px;animation-delay:3s;"></div>
 
-```
 <!-- Floating particles -->
 <div class="f-particle" style="width:5px;height:5px;background:#39C5BB;left:12%;animation-duration:12s;animation-delay:0s;opacity:0.5;"></div>
 <div class="f-particle" style="width:3px;height:3px;background:#C8102E;left:28%;animation-duration:15s;animation-delay:2s;opacity:0.35;"></div>
@@ -999,8 +1049,6 @@
   <div class="f-scroll-line"></div>
   Scroll
 </div>
-```
-
   </section>
 
   <div class="f-jp-border"></div>
@@ -1026,6 +1074,59 @@
           <div class="f-ntitle">提前購買東京鐵塔票</div>
           <div class="f-ndesc">東京鑽石之旅體驗票 $40 HKD · 18:00 前15分鐘到達</div>
         </div>
+        <div class="f-ncard">
+          <div class="f-ndate">Drive · 主文件夾</div>
+          <div class="f-ntitle">📁 企劃文件 · Reels 構思</div>
+          <div class="f-ndesc">內有 Reels 概念構思、電影講稿台詞、Postcard 預訂內容<br><a href="https://drive.google.com/drive/folders/1JdDo96VjqiqWMx7PfKPFq0QqoucMclfk?usp=sharing" target="_blank" style="color:#39C5BB;font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-decoration:none;">→ 開啟 Google Drive</a></div>
+        </div>
+        <div class="f-ncard" style="border-left-color:transparent;">
+          <div class="f-ndate" style="color:#39C5BB;">ゆるキャン△ · 聖地巡禮</div>
+          <div class="f-ntitle">河口湖 — 單車 · 露營</div>
+          <div class="f-ndesc">本次行程途經多個《搖曳露營》聖地：大石公園、本栖湖周邊、富士五湖沿線。<br><span style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#39C5BB;letter-spacing:0.15em;">△ YURU CAMP ROUTE</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-jp-border"></div>
+
+  <!-- ゆるキャン△ BANNER -->
+
+  <div style="background:#ffffff;padding:3rem 2rem;border-bottom:1px solid #E0DDD6;">
+    <div style="max-width:900px;margin:0 auto;display:flex;gap:2rem;align-items:center;flex-wrap:wrap;">
+      <!-- Campfire SVG -->
+      <div style="flex-shrink:0;opacity:0.85;">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Logs -->
+          <ellipse cx="36" cy="58" rx="22" ry="5" fill="#C8A882" opacity="0.5"/>
+          <rect x="14" y="52" width="44" height="7" rx="3.5" fill="#A07840" opacity="0.7"/>
+          <!-- Flame outer -->
+          <path d="M36 14 Q28 26 24 38 Q22 48 36 52 Q50 48 48 38 Q44 26 36 14Z" fill="#FF7A2F" opacity="0.85"/>
+          <!-- Flame mid -->
+          <path d="M36 22 Q30 32 28 40 Q27 47 36 50 Q45 47 44 40 Q42 32 36 22Z" fill="#FFA540"/>
+          <!-- Flame inner -->
+          <path d="M36 30 Q33 37 33 42 Q33 47 36 49 Q39 47 39 42 Q39 37 36 30Z" fill="#FFD166"/>
+          <!-- Spark dots -->
+          <circle cx="26" cy="30" r="2" fill="#FF7A2F" opacity="0.6"/>
+          <circle cx="46" cy="24" r="1.5" fill="#FFA540" opacity="0.5"/>
+          <circle cx="30" cy="18" r="1" fill="#FFD166" opacity="0.4"/>
+          <circle cx="44" cy="34" r="1.2" fill="#FF7A2F" opacity="0.45"/>
+        </svg>
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.4em;color:#39C5BB;text-transform:uppercase;margin-bottom:0.5rem;">ゆるキャン△ · Yuru Camp Route</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:1.15rem;font-weight:700;color:#1A1A1A;margin-bottom:0.5rem;">搖曳露營聖地巡禮</div>
+        <div style="font-size:0.8rem;color:#888;line-height:1.75;">
+          本次行程途經多個《搖曳露營△》聖地 — 河口湖、西湖、大石公園、本栖湖周邊。<br>
+          <span style="font-family:'DM Mono',monospace;font-size:0.68rem;color:#39C5BB;letter-spacing:0.12em;">「ひとりでも、景色はちゃんとそこにある。」</span>
+        </div>
+        <div style="margin-top:0.9rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <span style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;padding:0.15rem 0.55rem;border:1px solid rgba(57,197,187,0.3);color:#39C5BB;border-radius:2px;">△ 大石公園</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;padding:0.15rem 0.55rem;border:1px solid rgba(57,197,187,0.3);color:#39C5BB;border-radius:2px;">△ 西湖根場</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;padding:0.15rem 0.55rem;border:1px solid rgba(57,197,187,0.3);color:#39C5BB;border-radius:2px;">△ 留守ヶ岩浜</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;padding:0.15rem 0.55rem;border:1px solid rgba(57,197,187,0.3);color:#39C5BB;border-radius:2px;">△ 河口湖楓葉迴廊</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;padding:0.15rem 0.55rem;border:1px solid rgba(57,197,187,0.3);color:#39C5BB;border-radius:2px;">△ 湘南海岸</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1036,8 +1137,6 @@
 
   <div class="f-tl-section">
     <div class="f-section-label">五日行程時間線</div>
-
-```
 <!-- DAY 1 -->
 <div class="f-day">
   <div class="f-day-header">
@@ -1045,6 +1144,8 @@
     <div class="f-day-info">
       <div class="f-day-date">07.08 · WED</div>
       <div class="f-day-theme">東京 — 動漫 · 攝影</div>
+      <div class="f-day-cin">霓虹燈下的起點</div>
+      <div class="f-day-cin-en">Tokyo, First Frames</div>
     </div>
   </div>
   <div class="f-timeline">
@@ -1066,7 +1167,7 @@
       <div class="f-dot major"></div>
       <div class="f-time">09:30 — 11:00</div>
       <div class="f-name">上野 · 阿美橫町</div>
-      <div class="f-desc">阿美橫町攝影 · 街道探索 · 早餐：大戶屋（10點開門）</div>
+      <div class="f-desc">阿美橫町攝影 · 街道探索 · 早餐：一蘭拉麵 / 大戶屋（10點開門）</div>
       <span class="f-tag">攝影</span><span class="f-tag">餐飲</span>
     </div>
     <div class="f-tl-item">
@@ -1074,6 +1175,7 @@
       <div class="f-time">11:20 — 12:00</div>
       <div class="f-name">淺草寺</div>
       <div class="f-desc">東京最古老寺廟 · 雷門大燈籠攝影 · 茶點 Starbucks</div>
+      <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 凜在《搖曳露營》動畫開場獨自踏上旅途，這趟東京第一天，也是屬於你一個人的出發。なんか、旅っていいよね。</div>
       <span class="f-tag">文化</span><span class="f-tag">攝影</span>
     </div>
     <div class="f-tl-item">
@@ -1094,7 +1196,7 @@
       <div class="f-dot"></div>
       <div class="f-time">15:30 — 16:30</div>
       <div class="f-name">鶏soba 座銀 · KITTE丸の内店 🍜</div>
-      <div class="f-desc">JR經秋葉原牛奶店前往 · ⚠️ 如果需要排隊則取消下節文具店</div>
+      <div class="f-desc">JR經秋葉原牛奶店前往 · KITTE ガーデン 屋頂花園<br>⚠️ 如果需要排隊則取消下節文具店</div>
       <span class="f-tag">餐飲</span>
     </div>
     <div class="f-tl-item">
@@ -1106,21 +1208,29 @@
     </div>
     <div class="f-tl-item">
       <div class="f-dot major"></div>
-      <div class="f-time">17:45 — 19:00</div>
+      <div class="f-time">17:45 — 19:15</div>
       <div class="f-name">東京鐵塔 🗼</div>
       <div class="f-desc">東京鑽石之旅體驗票 · $40 HKD · 18:00 提前15分鐘抵達</div>
       <span class="f-tag red">必去</span>
     </div>
     <div class="f-tl-item">
       <div class="f-dot major"></div>
-      <div class="f-time">19:30 — 21:40</div>
-      <div class="f-name">新宿十字路口 · Starbucks · 歌舞伎町</div>
-      <div class="f-desc">新宿夜景打卡 · 歌舞伎町探索</div>
+      <div class="f-time">19:45 — 20:20</div>
+      <div class="f-name">渋谷スクランブル交差点 🚦</div>
+      <div class="f-desc">東京最著名十字路口 · 人潮洶湧的城市脈搏</div>
+      <span class="f-tag">攝影</span><span class="f-tag">夜遊</span>
+    </div>
+    <div class="f-tl-item">
+      <div class="f-dot major"></div>
+      <div class="f-time">20:40 — 21:50</div>
+      <div class="f-name">思い出横丁 · 新宿東口の猫 · 歌舞伎町 🌃</div>
+      <div class="f-desc">思い出横丁燒烤小巷 · 新宿東口的貓咪廣告牌 · 歌舞伎町霓虹夜景</div>
+      <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 新宿的霓虹與野外星空截然不同——但凜偶爾也會獨自逛城市。今晚先把城市刻進相機，明天就騎向山的方向。</div>
       <span class="f-tag">攝影</span><span class="f-tag">夜遊</span>
     </div>
     <div class="f-tl-item">
       <div class="f-dot"></div>
-      <div class="f-time">21:45 — 22:45</div>
+      <div class="f-time">21:55 — 22:45</div>
       <div class="f-name">新宿 → Palace Japan Hotel</div>
       <div class="f-desc">搭JR山手線拍攝Reels · 最遲入住2300 · 梳洗並簡單剪接 · 盡量00:00前入睡 · 05:30起身</div>
       <span class="f-tag">住宿</span>
@@ -1135,6 +1245,8 @@
     <div class="f-day-info">
       <div class="f-day-date">07.09 · THU</div>
       <div class="f-day-theme">河口湖 — 單車 · 露營</div>
+      <div class="f-day-cin">沿著富士山騎向日落</div>
+      <div class="f-day-cin-en">Ride Into Blue Hour</div>
     </div>
   </div>
   <div class="f-timeline">
@@ -1148,7 +1260,7 @@
       <div class="f-dot"></div>
       <div class="f-time">06:10 — 06:40</div>
       <div class="f-name">早餐 · 7-11 / 外送 / 松屋</div>
-      <div class="f-desc">酒店附近解決早餐</div>
+      <div class="f-desc">酒店附近解決早餐 · 或考慮到新宿 Starbucks</div>
       <span class="f-tag">餐飲</span>
     </div>
     <div class="f-tl-item">
@@ -1190,14 +1302,14 @@
       <div class="f-dot major"></div>
       <div class="f-time">15:30 — 15:50</div>
       <div class="f-name">河口湖站前 Lawson + 平交道攝影</div>
-      <div class="f-desc">河口湖站前平交道打卡攝影</div>
+      <div class="f-desc">河口湖站前平交道打卡攝影 · 如不夠時間明天再拍</div>
       <span class="f-tag">攝影</span>
     </div>
     <div class="f-tl-item">
       <div class="f-dot"></div>
       <div class="f-time">15:55 — 16:10</div>
       <div class="f-name">レンタサイクル ぷーさん 🚴</div>
-      <div class="f-desc">租借單車 · ¥2,500/晚</div>
+      <div class="f-desc">租借電動單車 · ¥2,500/晚</div>
       <span class="f-tag">交通</span>
     </div>
     <div class="f-tl-item">
@@ -1209,23 +1321,54 @@
     </div>
     <div class="f-tl-item">
       <div class="f-dot major"></div>
-      <div class="f-time">16:50 — 18:15 · 11KM</div>
-      <div class="f-name">單車前往西湖根場浜 🚴</div>
-      <div class="f-desc">時速22km/h · 約30分鐘抵達 · 沿途拍攝點各停10分鐘：<br>八木崎公園 → 勝山無料駐車場 → 小海公園<br>具有30分鐘後備時間</div>
-      <span class="f-tag red">單車</span><span class="f-tag">攝影</span>
+      <div class="f-time">16:50 — 17:10</div>
+      <div class="f-name">河口湖大橋 🌉</div>
+      <div class="f-desc">拍攝踩單車過橋鏡頭 · 與富士山合照</div>
+      <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 此橋亦是凜和騎車去本栖湖的路線沿線風景</div>
+      <span class="f-tag red">必拍</span><span class="f-tag">攝影</span>
+    </div>
+    <div class="f-tl-item">
+      <div class="f-dot"></div>
+      <div class="f-time">17:10 — 17:30</div>
+      <div class="f-name">全家便利商店 北河口湖店</div>
+      <div class="f-desc">+3.4KM · 車場踩過招牌 Drive Shot · 招牌合影</div>
+      <span class="f-tag">攝影</span>
     </div>
     <div class="f-tl-item">
       <div class="f-dot major"></div>
-      <div class="f-time">18:20 — 18:40</div>
-      <div class="f-name">西湖根場浜 · 日落攝影 🌇</div>
-      <div class="f-desc">富士山夕陽 · 拍攝完成後返回營地</div>
+      <div class="f-time">17:30 — 17:55</div>
+      <div class="f-name">長崎公園 🌿</div>
+      <div class="f-desc">逗留20分鐘 · 最重要的鏡頭位</div>
+      <div class="f-yuru-block"><strong>△ ゆるキャン聖地</strong> 大石公園一帶是《搖曳露營》單車旅途的重要場景，湖畔視野絕佳</div>
+      <span class="f-tag red">必拍</span>
+    </div>
+    <div class="f-tl-item">
+      <div class="f-dot major"></div>
+      <div class="f-time">17:55 — 18:15</div>
+      <div class="f-name">大石公園 🌸</div>
+      <div class="f-desc">逗留15分鐘 · 重要鏡頭位 · 富士山湖景攝影</div>
+      <span class="f-tag red">必拍</span><span class="f-tag">攝影</span>
+    </div>
+    <div class="f-tl-item">
+      <div class="f-dot major"></div>
+      <div class="f-time">18:15 — 18:50</div>
+      <div class="f-name">留守ヶ岩浜 · 留守ヶ岩 🌅</div>
+      <div class="f-desc">日落前最後一口氣氛 · 比較少人<br>沙灘拍攝 · 登上岩石Shot · 逗留30分鐘</div>
       <span class="f-tag red">必看</span><span class="f-tag">攝影</span>
     </div>
     <div class="f-tl-item">
       <div class="f-dot"></div>
-      <div class="f-time">19:00 後</div>
+      <div class="f-time">18:50 — 19:05 · 6KM</div>
+      <div class="f-name">留守ヶ岩 → 福住オートキャンプ場</div>
+      <div class="f-desc">電動單車盡快到達 · ⚠️ 記得預備頭燈</div>
+      <span class="f-tag">交通</span>
+    </div>
+    <div class="f-tl-item">
+      <div class="f-dot"></div>
+      <div class="f-time">19:05 後 · 日落完畢</div>
       <div class="f-name">抵達營地 · 帳篷 · 付款 · ¥1,000 🏕️</div>
-      <div class="f-desc">Fukuzumi Auto Camping Ground · 福住オートキャンプ場<br>飲料販賣機 · 可租獨木舟 · ⚠️ 手機可能無訊號<br>九點前睡覺 · 簡單剪接</div>
+      <div class="f-desc">Fukuzumi Auto Camping Ground · 福住オートキャンプ場<br>飲料販賣機 · 可租獨木舟 · ⚠️ 手機可能無訊號<br>20:30前睡覺 · 簡單剪接 · 提早適應明天凌晨一點起身</div>
+      <div class="f-yuru-block"><strong>△ ゆるキャン精神</strong>「今日も良いソロキャン日和」— 一個人享受湖邊夜晚，數著星星入睡</div>
       <span class="f-tag red">露營</span>
     </div>
   </div>
@@ -1238,6 +1381,8 @@
     <div class="f-day-info">
       <div class="f-day-date">07.10 · FRI</div>
       <div class="f-day-theme">富士攻頂 — 登山日</div>
+      <div class="f-day-cin">凌晨四點的山脊線</div>
+      <div class="f-day-cin-en">Above The Clouds</div>
     </div>
   </div>
   <div class="f-timeline">
@@ -1249,21 +1394,29 @@
     </div>
     <div class="f-tl-item">
       <div class="f-dot major"></div>
-      <div class="f-time">04:00 — 04:30 · 7.5KM</div>
-      <div class="f-name">營地 → 大石公園</div>
-      <div class="f-desc">單車出發 · 迎接日出</div>
+      <div class="f-time">04:00 — 04:30 · 6KM</div>
+      <div class="f-name">營地 → 留守ヶ岩浜 · 留守ヶ岩</div>
+      <div class="f-desc">單車出發 · 回到昨日日落的岩石 · 今天換上日出的顏色</div>
       <span class="f-tag">單車</span>
     </div>
     <div class="f-tl-item">
       <div class="f-dot major"></div>
-      <div class="f-time">04:30 — 06:00</div>
-      <div class="f-name">大石公園 · 長崎公園 · 富士山日出 🌅</div>
-      <div class="f-desc">04:30 日出時間 · 富士山倒影湖景攝影</div>
+      <div class="f-time">04:30 — 05:20</div>
+      <div class="f-name">留守ヶ岩浜 · 留守ヶ岩 · 富士山日出 🌅</div>
+      <div class="f-desc">04:30 日出時間 · 岩石、湖面、富士山三位一體的攝影構圖</div>
+      <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 西湖沿岸是《搖曳露營》第二季なでしこ等人露營的取景地，清晨的湖面與作品氛圍相當令人沉醉</div>
       <span class="f-tag red">必看</span><span class="f-tag">攝影</span>
     </div>
     <div class="f-tl-item">
+      <div class="f-dot major"></div>
+      <div class="f-time">05:20 — 06:30</div>
+      <div class="f-name">大石公園 · 長崎公園 🌸</div>
+      <div class="f-desc">日出後繼續拍攝 · 富士山倒影湖景</div>
+      <span class="f-tag">攝影</span>
+    </div>
+    <div class="f-tl-item">
       <div class="f-dot"></div>
-      <div class="f-time">06:10 — 07:00 · 1.9KM</div>
+      <div class="f-time">06:30 — 07:00 · 1.9KM</div>
       <div class="f-name">大石公園 → 河口湖楓葉迴廊</div>
       <div class="f-desc">10分鐘單車 · 楓葉迴廊攝影打卡</div>
       <span class="f-tag">攝影</span>
@@ -1272,7 +1425,7 @@
       <div class="f-dot"></div>
       <div class="f-time">07:00 — 08:00</div>
       <div class="f-name">後備緩衝時間（按需使用）</div>
-      <div class="f-desc">或作第二次早餐 · 鄰近有便利店</div>
+      <div class="f-desc">或作第二次早餐 · 鄰近有便利店 · 感受氣氛隨意拍攝 · 可充電</div>
     </div>
     <div class="f-tl-item">
       <div class="f-dot"></div>
@@ -1285,7 +1438,7 @@
       <div class="f-dot"></div>
       <div class="f-time">09:00 — 10:00</div>
       <div class="f-name">Lawson 上山物資補給 🎒</div>
-      <div class="f-desc">2升飲用水 · 能量棒 · 朱古力<br>09:00–09:20 首選時段 · 09:45–10:00 備用</div>
+      <div class="f-desc">2升飲用水 · 能量棒 · 朱古力 · 電解質粉<br>09:00–09:20 首選時段 · 09:45–10:00 備用</div>
       <span class="f-tag red">⚠️ 重要</span>
     </div>
     <div class="f-tl-item">
@@ -1318,6 +1471,8 @@
     <div class="f-day-info">
       <div class="f-day-date">07.11 · SAT</div>
       <div class="f-day-theme">攻頂御來光 + 箱根</div>
+      <div class="f-day-cin">在日本最高點迎接日出</div>
+      <div class="f-day-cin-en">The Summit Morning</div>
     </div>
   </div>
   <div class="f-timeline">
@@ -1367,7 +1522,7 @@
       <div class="f-dot"></div>
       <div class="f-time">12:45 — 13:30</div>
       <div class="f-name">御殿場站 → Premium Outlet</div>
-      <div class="f-desc">12:40/12:55 穿梭巴士 JR御殿場站→Outlet<br>Starbucks 簡單午餐</div>
+      <div class="f-desc">12:40/12:55 穿梭巴士 JR御殿場站→Outlet<br>Starbucks 簡單午餐 · 此地僅作為中轉巴士站 · 不深入逛商場</div>
       <span class="f-tag">購物</span><span class="f-tag">餐飲</span>
     </div>
     <div class="f-tl-item">
@@ -1382,13 +1537,14 @@
       <div class="f-time">17:00 — 18:30</div>
       <div class="f-name">箱根海盜船 + 箱根神社 ⛩️</div>
       <div class="f-desc">桃源台→箱根町港（17:00前抵達）· 「Z03」→元箱根港 · 箱根神社</div>
+      <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 芦ノ湖畔的箱根神社是靜謐之地——就像在山中一個人靜靜泡著腳，等待人生下一段旅程開始。</div>
       <span class="f-tag red">必去</span>
     </div>
     <div class="f-tl-item">
       <div class="f-dot"></div>
       <div class="f-time">18:38 — 20:13</div>
       <div class="f-name">箱根 → 平塚 LiveMax</div>
-      <div class="f-desc">「H箱根町線」1838前抵達→小田原 · JR→平塚 · ¥440 YEN<br>LiveMax 平塚 · $273 HKD · 晚餐：外送 / 超市和牛杯麵 / 松屋</div>
+      <div class="f-desc">「H箱根町線」1838前抵達→小田原 · JR→平塚 · ¥440 YEN<br>LiveMax 平塚 · $273 HKD · 晚餐首選：くら寿司 · 後備：外送 / 超市和牛杯麵</div>
       <span class="f-tag">住宿</span>
     </div>
     <div class="f-tl-item">
@@ -1414,6 +1570,8 @@
     <div class="f-day-info">
       <div class="f-day-date">07.12 · SUN</div>
       <div class="f-day-theme">江之島 · 鎌倉 — 離港</div>
+      <div class="f-day-cin">讓海風把旅程慢慢吹完</div>
+      <div class="f-day-cin-en">Last Train To Summer</div>
     </div>
   </div>
   <div class="f-timeline">
@@ -1442,7 +1600,8 @@
       <div class="f-dot major"></div>
       <div class="f-time">10:00 — 12:00</div>
       <div class="f-name">新江ノ島水族館 🐟</div>
-      <div class="f-desc">$85 HKD · 沿海水族館</div>
+      <div class="f-desc">$85 HKD · 沿海水族館 · 讓疲倦的大腦稍為放鬆</div>
+      <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 湘南海岸是《搖曳露營》劇場版的主要舞台，此刻在海邊感受終章的氛圍</div>
       <span class="f-tag red">必去</span>
     </div>
     <div class="f-tl-item">
@@ -1482,7 +1641,6 @@
     </div>
   </div>
 </div>
-```
 
   </div><!-- /f-tl-section -->
 
@@ -1520,15 +1678,10 @@
         <div class="f-btotal-amt">$4,952 HKD</div>
       </div>
 
-```
   <!-- Income breakdown -->
   <div style="margin-top:2rem;padding:1.5rem;border:1px solid #E0DDD6;background:#ffffff;">
     <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.35em;color:#39C5BB;text-transform:uppercase;margin-bottom:1rem;">財政收入規劃</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;font-size:0.78rem;color:#888;line-height:1.8;">
-      <div>
-        <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#1A1A1A;margin-bottom:0.3rem;">五六七月生活費</div>
-        $4,500 HKD 預算收入
-      </div>
       <div>
         <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#1A1A1A;margin-bottom:0.3rem;">兌換日圓</div>
         取 $2,000 HKD → ¥40,000<br>餘 $2,500 HKD 存入銀行
@@ -1541,7 +1694,6 @@
   </div>
 
 </div>
-```
 
   </div>
 
@@ -1560,12 +1712,14 @@
         <div class="f-gitem">Montbell Gore-Tex 防水外套</div>
         <div class="f-gitem">NatureHike 雨褲</div>
         <div class="f-gitem">Montbell Gore-Tex 帽</div>
-        <div class="f-gitem">Salona Gore-Tex 行山鞋</div>
+        <div class="f-gitem">Solomon Gore-Tex 行山鞋</div>
+        <div class="f-gitem">厚羊毛襪</div>
         <div class="f-gitem">LCC機衫</div>
         <div class="f-gitem">便攜U形枕</div>
         <div class="f-gitem">單車手套</div>
         <div class="f-gitem">鋁箔防潮墊</div>
         <div class="f-gitem">背囊防雨套</div>
+        <div class="f-gitem">暖包 × 2</div>
       </div>
       <div class="f-gcol">
         <div class="f-gcol-title">攝影器材</div>
@@ -1601,11 +1755,57 @@
         <div class="f-gitem">鞋套</div>
         <div class="f-gitem">基本藥物</div>
         <div class="f-gitem">防曬霜</div>
+        <div class="f-gitem">運動毛巾</div>
         <div class="f-gitem">飲用水 2L × 2</div>
         <div class="f-gitem">能量棒</div>
         <div class="f-gitem">朱古力</div>
+        <div class="f-gitem">電解質粉</div>
       </div>
     </div>
+  </div>
+
+  <div class="f-jp-border"></div>
+
+  <!-- ゆるキャン△ SECTION -->
+
+  <div style="padding:4rem 2rem;max-width:900px;margin:0 auto;">
+    <div class="f-section-label">ゆるキャン△ · 聖地巡禮路線</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin-top:0.5rem;">
+
+  <div style="padding:1.2rem;border:1px solid rgba(57,197,187,0.25);border-radius:3px;background:rgba(57,197,187,0.03);position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:#39C5BB;"></div>
+    <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#39C5BB;letter-spacing:0.2em;margin-bottom:0.4rem;">DAY 2 · △ SCENE</div>
+    <div style="font-family:'Shippori Mincho',serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">大石公園 · 長崎公園</div>
+    <div style="font-size:0.75rem;color:#888;line-height:1.65;">なでしこ與凜初遇的富士湖畔。薰衣草花田配上逆光富士山，是《搖曳露營》最具代表性的構圖之一。</div>
+  </div>
+
+  <div style="padding:1.2rem;border:1px solid rgba(57,197,187,0.25);border-radius:3px;background:rgba(57,197,187,0.03);position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:#39C5BB;"></div>
+    <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#39C5BB;letter-spacing:0.2em;margin-bottom:0.4rem;">DAY 2-3 · △ SCENE</div>
+    <div style="font-family:'Shippori Mincho',serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">西湖 · 留守ヶ岩浜</div>
+    <div style="font-size:0.75rem;color:#888;line-height:1.65;">《搖曳露營》第二季後半的主要舞台。湖邊岩石、夕陽、帳篷——作品中最安靜美麗的片段在這裡發生。</div>
+  </div>
+
+  <div style="padding:1.2rem;border:1px solid rgba(57,197,187,0.25);border-radius:3px;background:rgba(57,197,187,0.03);position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:#39C5BB;"></div>
+    <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#39C5BB;letter-spacing:0.2em;margin-bottom:0.4rem;">DAY 5 · △ SCENE</div>
+    <div style="font-family:'Shippori Mincho',serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">湘南海岸 · 劇場版舞台</div>
+    <div style="font-size:0.75rem;color:#888;line-height:1.65;">《搖曳露營》劇場版以成年後的主角們重聚湘南為故事，七里ヶ浜的海浪聲是整部作品最後的餘韻。</div>
+  </div>
+
+  <div style="padding:1.2rem;border:1px solid rgba(57,197,187,0.25);border-radius:3px;background:rgba(57,197,187,0.03);position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:#C8102E;"></div>
+    <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#C8102E;letter-spacing:0.2em;margin-bottom:0.4rem;">DAY 3-4 · 富士山頂</div>
+    <div style="font-family:'Shippori Mincho',serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">本栖湖 · 富士山頂</div>
+    <div style="font-size:0.75rem;color:#888;line-height:1.65;">凜獨自騎單車來到本栖湖露營，遙望富士山的經典場景。而你，將要親身站在那個山頂，俯瞰一切。</div>
+  </div>
+
+</div>
+<div style="margin-top:1.2rem;padding:0.9rem 1.1rem;border:1px dashed rgba(57,197,187,0.3);border-radius:3px;font-size:0.74rem;color:#888;line-height:1.8;text-align:center;">
+  <span style="font-family:'Shippori Mincho',serif;color:#39C5BB;font-size:0.85rem;">「山は逃げないから、ゆっくり行こう。」</span><br>
+  <span style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;">山不會跑掉，所以慢慢走就好。— ゆるキャン△</span>
+</div>
+
   </div>
 
   <div class="f-jp-border"></div>
@@ -1716,24 +1916,92 @@ z-index:99998;
   setInterval(tick, 1000);
 })();
 
-/* ── MUSIC BUBBLE ── */
-var fujiPlaying = true;
-function fujiTogglePlay() {
-  fujiPlaying = !fujiPlaying;
-  var eq  = document.getElementById('fuji-eq');
-  var ico = document.getElementById('fuji-play-icon');
-  if (fujiPlaying) {
-    eq.classList.remove('paused');
-    ico.innerHTML = '<rect x="2" y="1" width="2.5" height="8" rx="1"/><rect x="5.5" y="1" width="2.5" height="8" rx="1"/>';
-  } else {
-    eq.classList.add('paused');
-    ico.innerHTML = '<polygon points="2,1 9,5 2,9"/>';
+/* ── MUSIC BUBBLE — Real Audio Playback ── */
+(function () {
+  var MP3 = 'https://raw.githubusercontent.com/SamuelYuen0201/26inMt-Fuji/main/miku_hajimarinomirai_256kbps.mp3';
+
+  var audio  = new Audio();
+  audio.src  = MP3;
+  audio.loop = true;
+  audio.preload = 'none'; /* don't load until user taps */
+  audio.volume  = 0.72;
+
+  var playing = false;
+  var loaded  = false;
+
+  function setIcon(isPlaying) {
+    var ico = document.getElementById('fuji-play-icon');
+    var eq  = document.getElementById('fuji-eq');
+    if (!ico || !eq) return;
+    if (isPlaying) {
+      /* pause icon — two vertical bars */
+      ico.innerHTML = '<rect x="1.5" y="1" width="2.8" height="8" rx="1" fill="white"/>'
+                    + '<rect x="5.7" y="1" width="2.8" height="8" rx="1" fill="white"/>';
+      eq.classList.remove('paused');
+    } else {
+      /* play icon — triangle */
+      ico.innerHTML = '<polygon points="2,1 9,5 2,9" fill="white"/>';
+      eq.classList.add('paused');
+    }
   }
-}
-/* Set initial state to paused icon since we can't play audio */
-(function(){
-  var ico = document.getElementById('fuji-play-icon');
-  if(ico) ico.innerHTML = '<rect x="2" y="1" width="2.5" height="8" rx="1" fill="white"/><rect x="5.5" y="1" width="2.5" height="8" rx="1" fill="white"/>';
+
+  /* Loading state — show spinner-like label */
+  function setLoading(on) {
+    var title = document.getElementById('fuji-music-title');
+    if (!title) return;
+    title.textContent = on ? 'Loading…' : '始まりの未来';
+  }
+
+  /* Fade in/out helpers */
+  function fadeIn(a, target, cb) {
+    a.volume = 0;
+    var step = setInterval(function () {
+      a.volume = Math.min(a.volume + 0.06, target);
+      if (a.volume >= target) { clearInterval(step); if (cb) cb(); }
+    }, 40);
+  }
+  function fadeOut(a, cb) {
+    var step = setInterval(function () {
+      a.volume = Math.max(a.volume - 0.06, 0);
+      if (a.volume <= 0) { clearInterval(step); a.pause(); if (cb) cb(); }
+    }, 40);
+  }
+
+  /* Toggle called by the pill onclick */
+  window.fujiTogglePlay = function () {
+    if (!playing) {
+      /* ── PLAY ── */
+      setLoading(!loaded);
+      var promise = audio.play();
+      if (promise !== undefined) {
+        promise.then(function () {
+          loaded   = true;
+          playing  = true;
+          setLoading(false);
+          setIcon(true);
+          if (audio.volume < 0.72) fadeIn(audio, 0.72);
+        }).catch(function (err) {
+          /* Autoplay blocked or network error */
+          setLoading(false);
+          console.warn('Fuji audio:', err);
+        });
+      }
+    } else {
+      /* ── PAUSE ── */
+      playing = false;
+      setIcon(false);
+      fadeOut(audio);
+    }
+  };
+
+  /* Sync UI if audio ends unexpectedly */
+  audio.addEventListener('ended', function () {
+    playing = false;
+    setIcon(false);
+  });
+
+  /* Initial UI state: show play icon (stopped) */
+  setIcon(false);
 })();
 
 /* ── MIKU CURSOR PARTICLE SYSTEM ── */
