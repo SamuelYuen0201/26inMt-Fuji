@@ -35,7 +35,7 @@ body{background:#F5F3EE;overflow-x:hidden}
 #fuji26{
   --red:#C8102E;--miku:#39C5BB;--miku2:#25A89F;--ink:#1A1A1A;
   --gray:#888;--light:#F5F3EE;--white:#fff;--line:#E0DDD6;
-  background:rgba(255,255,255,.88);color:#1A1A1A;
+  background:rgba(255,255,255,.65);color:#1A1A1A;
   font-family:'Noto Serif JP',serif;font-weight:300;line-height:1.8;
   overflow-x:hidden;max-width:100%;position:relative;z-index:1;
 }
