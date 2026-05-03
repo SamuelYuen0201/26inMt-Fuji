@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>26inMt.Fuji · 2026 Japan Expedition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#F5F3EE;overflow-x:hidden}
+
+@keyframes fuji-fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fuji-fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fuji-slideRight{from{opacity:0;transform:translateX(-18px) scale(0.98);filter:blur(2px)}to{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}}
+@keyframes fuji-pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(1.05);opacity:0.55}}
+@keyframes fuji-scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fuji-dotGlow{0%,100%{box-shadow:0 0 0 0 rgba(57,197,187,.55)}50%{box-shadow:0 0 0 8px rgba(57,197,187,0)}}
+@keyframes fuji-float{0%{transform:translateY(0) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:.6}100%{transform:translateY(-90vh) rotate(360deg);opacity:0}}
+@keyframes fuji-shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes fuji-eq1{0%,100%{height:4px}25%{height:14px}60%{height:8px}}
+@keyframes fuji-eq2{0%,100%{height:10px}40%{height:4px}70%{height:16px}}
+@keyframes fuji-eq3{0%,100%{height:7px}30%{height:18px}65%{height:5px}}
+@keyframes fuji-eq4{0%,100%{height:14px}20%{height:5px}55%{height:12px}}
+@keyframes fuji-eq5{0%,100%{height:5px}45%{height:15px}75%{height:8px}}
+@keyframes fuji-bubbleIn{from{opacity:0;transform:translateY(20px) scale(0.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes fuji-sway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1.5deg)}}
+@keyframes fuji-cardIn{from{opacity:0;transform:translateY(22px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes fuji-lineFlow{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes fuji-lineScan{0%{background-position:0 -60px}100%{background-position:0 100%}}
+@keyframes fuji-spin{to{transform:rotate(360deg)}}
+
+#fuji26{
+  --red:#C8102E;--miku:#39C5BB;--miku2:#25A89F;--ink:#1A1A1A;
+  --gray:#888;--light:#F5F3EE;--white:#fff;--line:#E0DDD6;
+  background:rgba(255,255,255,.88);color:#1A1A1A;
+  font-family:'Noto Serif JP',serif;font-weight:300;line-height:1.8;
+  overflow-x:hidden;max-width:100%;position:relative;z-index:1;
+}
+/* HERO */
+#fuji26 .f-hero{
+  position:relative;min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:4rem 2rem 6rem;
+  border-bottom:1px solid #E0DDD6;overflow:hidden;
+  background:rgba(255,255,255,.7);text-align:center;backdrop-filter:blur(2px);
+}
+#fuji26 .f-particle{position:absolute;border-radius:50%;pointer-events:none;animation:fuji-float linear infinite}
+#fuji26 .f-circle{
+  position:absolute;border-radius:50%;border:1px solid rgba(200,16,46,.07);
+  top:50%;left:50%;animation:fuji-pulse 6s ease-in-out infinite;pointer-events:none;
+}
+#fuji26 .f-circle:nth-child(1){width:500px;height:500px}
+#fuji26 .f-circle:nth-child(2){width:700px;height:700px;animation-delay:1s;border-color:rgba(200,16,46,.04)}
+#fuji26 .f-circle:nth-child(3){width:900px;height:900px;animation-delay:2s;border-color:rgba(200,16,46,.025)}
+#fuji26 .f-circle.miku{border-color:rgba(57,197,187,.08);animation-duration:8s}
+#fuji26 .f-fuji-svg{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:860px;opacity:.04;pointer-events:none}
+#fuji26 .f-miku-watermark{position:absolute;bottom:3rem;right:3rem;opacity:.055;pointer-events:none;animation:fuji-sway 5s ease-in-out infinite;transform-origin:bottom center}
+#fuji26 .f-hero-label{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.32em;color:#C8102E;text-transform:uppercase;position:relative;z-index:1;animation:fuji-fadeUp .7s .1s ease both;margin-bottom:1.2rem}
+#fuji26 .f-hero-title{font-family:'Shippori Mincho',serif;font-size:clamp(3.2rem,11vw,7.5rem);font-weight:700;letter-spacing:-.02em;line-height:1;position:relative;z-index:1;animation:fuji-fadeUp .7s .25s ease both}
+#fuji26 .f-hero-title span{color:#C8102E}
+#fuji26 .f-hero-title span::after{content:'';display:block;height:3px;background:linear-gradient(90deg,#39C5BB,transparent);margin-top:2px;border-radius:2px;animation:fuji-fadeIn 1s 1s ease both}
+#fuji26 .f-hero-sub{margin-top:1rem;font-size:.95rem;color:#888;letter-spacing:.28em;position:relative;z-index:1;animation:fuji-fadeUp .7s .4s ease both}
+#fuji26 .f-hero-date{margin-top:1.2rem;font-family:'DM Mono',monospace;font-size:.8rem;color:#1A1A1A;letter-spacing:.15em;position:relative;z-index:1;animation:fuji-fadeUp .7s .55s ease both}
+#fuji26 .f-miku-badge{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;padding:.3rem .8rem;border:1px solid rgba(57,197,187,.35);border-radius:2px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.25em;color:#39C5BB;position:relative;z-index:1;animation:fuji-fadeUp .7s .65s ease both;background:rgba(57,197,187,.04)}
+#fuji26 .f-countdown-wrap{margin-top:2.5rem;position:relative;z-index:1;animation:fuji-fadeUp .7s .7s ease both}
+#fuji26 .f-cd-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.38em;color:#888;text-transform:uppercase;margin-bottom:.9rem}
+#fuji26 .f-countdown{display:flex;gap:1.2rem;align-items:flex-end;justify-content:center;flex-wrap:wrap}
+#fuji26 .f-cb{display:flex;flex-direction:column;align-items:center;gap:.25rem}
+#fuji26 .f-num{font-family:'Shippori Mincho',serif;font-size:clamp(2.2rem,7vw,4rem);font-weight:700;line-height:1;color:#C8102E;min-width:2ch;text-align:center;transition:color .3s}
+#fuji26 .f-unit{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.22em;color:#888;text-transform:uppercase}
+#fuji26 .f-sep{font-family:'Shippori Mincho',serif;font-size:2.5rem;color:#E0DDD6;line-height:1;padding-bottom:.4rem}
+#fuji26 .f-scroll{position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.35em;color:#888;text-transform:uppercase;animation:fuji-fadeUp 1s 1.3s ease both;z-index:1}
+#fuji26 .f-scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,#39C5BB,transparent);animation:fuji-scrollLine 1.6s ease-in-out infinite}
+#fuji26 .f-jp-border{height:4px;background:repeating-linear-gradient(90deg,#C8102E 0,#C8102E 6px,#39C5BB 6px,#39C5BB 10px,transparent 10px,transparent 18px);opacity:.18}
+#fuji26 .f-section-label{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.42em;color:#C8102E;text-transform:uppercase;display:flex;align-items:center;gap:1rem;margin-bottom:2rem;position:relative;overflow:hidden}
+#fuji26 .f-section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#E0DDD6,#39C5BB22)}
+/* NOTICES */
+#fuji26 .f-notices{background:rgba(245,243,238,.88);padding:4rem 2rem;border-bottom:1px solid #E0DDD6;backdrop-filter:blur(4px)}
+#fuji26 .f-notices-inner{max-width:900px;margin:0 auto}
+#fuji26 .f-notices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.4rem}
+#fuji26 .f-ncard{background:rgba(255,255,255,.92);border:1px solid #E0DDD6;padding:1.4rem;position:relative;animation:fuji-cardIn .6s ease both;transition:transform .25s ease,box-shadow .25s ease;overflow:hidden}
+#fuji26 .f-ncard::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,#C8102E,#39C5BB)}
+#fuji26 .f-ncard:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.07)}
+#fuji26 .f-ndate{font-family:'DM Mono',monospace;font-size:.72rem;color:#C8102E;letter-spacing:.1em;margin-bottom:.4rem}
+#fuji26 .f-ntitle{font-family:'Shippori Mincho',serif;font-size:1rem;font-weight:700;margin-bottom:.3rem;color:#1A1A1A}
+#fuji26 .f-ndesc{font-size:.78rem;color:#888;line-height:1.6}
+/* TIMELINE */
+#fuji26 .f-tl-section{padding:5rem 2rem;max-width:1000px;margin:0 auto}
+#fuji26 .f-day{margin-bottom:5rem;animation:fuji-fadeUp .7s ease both}
+#fuji26 .f-day-header{display:flex;align-items:flex-end;gap:1.5rem;margin-bottom:2rem;padding-bottom:1.2rem;border-bottom:1px solid #E0DDD6;position:relative}
+#fuji26 .f-day-header::after{content:'';position:absolute;bottom:-1px;left:0;width:48px;height:2px;background:#39C5BB;border-radius:2px}
+#fuji26 .f-day-num{font-family:'Shippori Mincho',serif;font-size:clamp(3.5rem,9vw,6rem);font-weight:700;line-height:1;color:#E0DDD6;letter-spacing:-.03em;transition:color .3s}
+#fuji26 .f-day:hover .f-day-num{color:rgba(57,197,187,.25)}
+#fuji26 .f-day-info{flex:1}
+#fuji26 .f-day-date{font-family:'DM Mono',monospace;font-size:.68rem;color:#C8102E;letter-spacing:.25em;margin-bottom:.2rem}
+#fuji26 .f-day-theme{font-family:'Shippori Mincho',serif;font-size:1.3rem;font-weight:700;color:#1A1A1A}
+#fuji26 .f-day-cin{margin-top:.55rem;font-family:'Shippori Mincho',serif;font-size:clamp(1.05rem,3vw,1.45rem);font-weight:700;color:#1A1A1A;letter-spacing:.02em;line-height:1.3}
+#fuji26 .f-day-cin-en{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.3em;color:#39C5BB;text-transform:uppercase;margin-top:.2rem;opacity:.85}
+#fuji26 .f-yuru-block{margin:.8rem 0 0;padding:.7rem .9rem;border-left:2px solid #39C5BB;background:rgba(57,197,187,.04);border-radius:0 3px 3px 0;font-size:.73rem;color:#555;line-height:1.65}
+#fuji26 .f-yuru-block strong{font-family:'Shippori Mincho',serif;color:#39C5BB;font-size:.78rem}
+#fuji26 .f-timeline{position:relative;padding-left:2.2rem}
+#fuji26 .f-timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:0;width:2px;background:linear-gradient(to bottom,#C8102E 0%,#39C5BB 35%,rgba(57,197,187,.4) 65%,rgba(224,221,214,.3) 100%);border-radius:2px;animation:fuji-lineFlow 4s ease-in-out infinite}
+#fuji26 .f-timeline::after{content:'';position:absolute;left:5px;top:8px;bottom:0;width:2px;background:linear-gradient(to bottom,transparent 0%,rgba(255,255,255,.8) 40%,transparent 55%);background-size:100% 60px;animation:fuji-lineScan 2.5s linear infinite;pointer-events:none}
+#fuji26 .f-tl-item{position:relative;margin-bottom:1.8rem;animation:fuji-slideRight .5s ease both;padding:.6rem .8rem;border-radius:3px;transition:background .25s ease,transform .2s ease;border-left:2px solid transparent;cursor:pointer}
+#fuji26 .f-tl-item:hover{background:rgba(57,197,187,.05);border-left-color:rgba(57,197,187,.3);transform:translateX(3px)}
+#fuji26 .f-dot{position:absolute;left:calc(-2.2rem - 1px);top:11px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #C8102E;transition:background .2s,transform .25s,border-color .2s}
+#fuji26 .f-dot.major{background:#C8102E;width:14px;height:14px;top:10px;animation:fuji-dotGlow 2.5s ease-in-out infinite}
+#fuji26 .f-tl-item:hover .f-dot{background:#39C5BB;border-color:#39C5BB;transform:scale(1.35)}
+#fuji26 .f-tl-item:hover .f-dot.major{background:#39C5BB;border-color:#39C5BB}
+#fuji26 .f-time{font-family:'DM Mono',monospace;font-size:.63rem;color:#888;letter-spacing:.1em;margin-bottom:.15rem}
+#fuji26 .f-name{font-family:'Shippori Mincho',serif;font-size:.98rem;font-weight:700;color:#1A1A1A;margin-bottom:.15rem;transition:color .2s}
+#fuji26 .f-desc{font-size:.77rem;color:#888;line-height:1.65}
+#fuji26 .f-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.15em;padding:.12rem .45rem;border:1px solid #E0DDD6;color:#888;margin-top:.3rem;margin-right:.3rem;text-transform:uppercase;transition:border-color .2s,color .2s}
+#fuji26 .f-tl-item:hover .f-tag{border-color:rgba(57,197,187,.3)}
+#fuji26 .f-tag.red{border-color:#C8102E;color:#C8102E}
+/* BUDGET */
+#fuji26 .f-budget{background:rgba(245,243,238,.9);padding:5rem 2rem;border-top:1px solid #E0DDD6;backdrop-filter:blur(4px)}
+#fuji26 .f-budget-inner{max-width:900px;margin:0 auto}
+#fuji26 .f-budget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:1.4rem}
+#fuji26 .f-bcard{background:rgba(255,255,255,.92);border:1px solid #E0DDD6;padding:1.4rem;animation:fuji-cardIn .6s ease both;transition:transform .22s ease,box-shadow .22s ease;cursor:default;overflow:hidden;position:relative}
+#fuji26 .f-bcard:hover{transform:translateY(-4px) rotate(.4deg);box-shadow:0 10px 28px rgba(0,0,0,.07)}
+#fuji26 .f-blabel{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.25em;color:#888;text-transform:uppercase;margin-bottom:.6rem}
+#fuji26 .f-bamt{font-family:'Shippori Mincho',serif;font-size:1.9rem;font-weight:700;color:#1A1A1A;line-height:1}
+#fuji26 .f-bamt small{font-size:.8rem;font-family:'DM Mono',monospace;color:#888;font-weight:400}
+#fuji26 .f-btotal{margin-top:1.5rem;padding:1.8rem 2rem;background:linear-gradient(105deg,#C8102E 0%,#a50e24 100%);color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;animation:fuji-cardIn .6s .4s ease both;position:relative;overflow:hidden}
+#fuji26 .f-btotal-label{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;opacity:.75}
+#fuji26 .f-btotal-amt{font-family:'Shippori Mincho',serif;font-size:2.3rem;font-weight:700}
+/* GEAR */
+#fuji26 .f-gear{padding:5rem 2rem;max-width:900px;margin:0 auto}
+#fuji26 .f-gear-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));border:1px solid #E0DDD6;margin-top:2rem;animation:fuji-cardIn .6s .1s ease both}
+#fuji26 .f-gcol{padding:1.4rem;border-right:1px solid #E0DDD6;transition:background .2s}
+#fuji26 .f-gcol:hover{background:rgba(57,197,187,.03)}
+#fuji26 .f-gcol:last-child{border-right:none}
+#fuji26 .f-gcol-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.25em;color:#39C5BB;text-transform:uppercase;margin-bottom:.9rem}
+#fuji26 .f-gitem{font-size:.77rem;color:#1A1A1A;padding:.2rem 0;border-bottom:1px solid #E0DDD6;line-height:1.5}
+#fuji26 .f-gitem:last-child{border-bottom:none}
+/* FOOTER */
+#fuji26 .f-footer{border-top:1px solid #E0DDD6;padding:2rem;text-align:center;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:#888;position:relative;background:rgba(255,255,255,.88)}
+#fuji26 .f-footer span{color:#C8102E}
+#fuji26 .f-footer-miku{color:#39C5BB;font-size:.58rem;margin-top:.5rem;opacity:.65;letter-spacing:.3em}
+/* EQ */
+#fuji-eq span:nth-child(1){animation:fuji-eq1 .9s ease-in-out infinite}
+#fuji-eq span:nth-child(2){animation:fuji-eq2 .75s ease-in-out infinite .1s}
+#fuji-eq span:nth-child(3){animation:fuji-eq3 1.1s ease-in-out infinite .2s}
+#fuji-eq span:nth-child(4){animation:fuji-eq4 .85s ease-in-out infinite .05s}
+#fuji-eq span:nth-child(5){animation:fuji-eq5 1s ease-in-out infinite .15s}
+#fuji-eq.paused span{animation-play-state:paused;height:4px!important}
+/* Leaflet */
+.leaflet-container{background:#f5f3ee}
+.leaflet-tooltip{background:rgba(255,255,255,.95)!important;border:1px solid #E0DDD6!important;border-radius:3px!important;box-shadow:0 4px 12px rgba(0,0,0,.1)!important;padding:4px 8px!important}
+/* POPUP */
+.fuji-anime-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);animation:fuji-fadeIn .3s ease;padding:1rem}
+.fuji-anime-popup{background:#fff;border-radius:4px;overflow:hidden;max-width:440px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.3);animation:fuji-bubbleIn .35s ease;position:relative}
+/* LEGEND */
+#fuji-legend{position:fixed;top:1rem;left:1rem;z-index:100;background:rgba(255,255,255,.94);border:1px solid #E0DDD6;border-radius:4px;padding:.5rem .6rem;box-shadow:0 4px 20px rgba(0,0,0,.1);backdrop-filter:blur(8px);min-width:140px;max-width:180px}
+#fuji-legend-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;gap:.5rem}
+#fuji-legend-title{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.2em;color:#888;text-transform:uppercase}
+#fuji-legend-arr{font-size:.5rem;color:#aaa;transition:transform .3s ease}
+#fuji-legend-arr.open{transform:rotate(180deg)}
+#fuji-legend-body{max-height:0;overflow:hidden;transition:max-height .35s ease,opacity .35s ease;opacity:0}
+#fuji-legend-body.open{max-height:300px;opacity:1}
+.legend-item{display:flex;align-items:center;gap:.3rem;margin-top:.25rem}
+.legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.legend-label{font-family:'DM Mono',monospace;font-size:.48rem;color:#444;letter-spacing:.05em}
+/* MUSIC */
+#fuji-music-bubble{position:fixed;bottom:1.8rem;right:1.8rem;z-index:9999}
+#fuji-music-pill{display:flex;align-items:center;gap:.7rem;padding:.65rem 1rem .65rem .75rem;background:linear-gradient(135deg,#1d9e97 0%,#39C5BB 100%);border-radius:50px;box-shadow:0 4px 20px rgba(57,197,187,.4),0 2px 8px rgba(0,0,0,.12);cursor:pointer;white-space:nowrap;overflow:hidden;max-width:240px}
+/* SPINNER */
+.fuji-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:fuji-spin .8s linear infinite;display:inline-block;flex-shrink:0}
+/* RESPONSIVE */
+@media(max-width:600px){
+  #fuji26 .f-day-header{flex-direction:column;align-items:flex-start;gap:.5rem}
+  #fuji26 .f-day-num{font-size:3rem}
+  #fuji26 .f-gcol{border-right:none;border-bottom:1px solid #E0DDD6}
+  #fuji26 .f-btotal{flex-direction:column;text-align:center}
+  #fuji26 .f-countdown{gap:.7rem}
+  #fuji26 .f-sep{font-size:1.8rem}
+  .fuji-anime-popup{max-width:100%}
+}
+</style>
+</head>
+<body>
+<!-- Map background -->
+<div id="fuji-map-bg" style="position:fixed;inset:0;z-index:0;opacity:.22;pointer-events:none;filter:saturate(.7)"></div>
+
+<!-- Particle canvas -->
+<canvas id="fuji-miku-canvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:99998"></canvas>
+
+<!-- Legend -->
+<div id="fuji-legend">
+  <div id="fuji-legend-header" onclick="toggleLegend()">
+    <span id="fuji-legend-title">🗺️ 聖地巡禮 Map</span>
+    <span id="fuji-legend-arr">▼</span>
+  </div>
+  <div id="fuji-legend-body">
+    <div class="legend-item"><div class="legend-dot" style="background:#39C5BB"></div><span class="legend-label">🏕️ ゆるキャン△ S1</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2eaadb"></div><span class="legend-label">🏕️ ゆるキャン△ S2</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f76e3c"></div><span class="legend-label">⛰️ 向山進発NS</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e06fa0"></div><span class="legend-label">🌸 薫る花は凛と</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div><span class="legend-label">🔫 Lycoris Recoil</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8e44ad"></div><span class="legend-label">🎸 BanG Dream MyGO</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1c398e"></div><span class="legend-label">🐇 青春豬頭少年</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff428e"></div><span class="legend-label">🎸 孤獨搖滾</span></div>
+  </div>
+</div>
+
+<!-- Music bubble -->
+<div id="fuji-music-bubble">
+  <div id="fuji-music-pill" onclick="fujiTogglePlay()">
+    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="4" fill="rgba(255,255,255,0.85)"/><path d="M4 6 Q1 4 1 9 Q0 12 5 11" fill="rgba(255,255,255,0.7)"/><path d="M12 6 Q15 4 15 9 Q16 12 11 11" fill="rgba(255,255,255,0.7)"/></svg>
+    </div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:.7rem;font-weight:700;color:#fff;letter-spacing:.05em;font-family:'DM Mono',monospace">始まりの未来</div>
+      <div style="font-size:.58rem;color:rgba(255,255,255,.75);letter-spacing:.12em;font-family:'DM Mono',monospace">初音ミク · Hatsune Miku</div>
+    </div>
+    <div id="fuji-eq" class="paused" style="display:flex;align-items:flex-end;gap:2px;height:18px;flex-shrink:0">
+      <span style="display:block;width:3px;background:rgba(255,255,255,.85);border-radius:2px;height:8px"></span>
+      <span style="display:block;width:3px;background:rgba(255,255,255,.85);border-radius:2px;height:14px"></span>
+      <span style="display:block;width:3px;background:rgba(255,255,255,.85);border-radius:2px;height:6px"></span>
+      <span style="display:block;width:3px;background:rgba(255,255,255,.85);border-radius:2px;height:12px"></span>
+      <span style="display:block;width:3px;background:rgba(255,255,255,.85);border-radius:2px;height:9px"></span>
+    </div>
+    <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <svg id="fuji-play-icon" width="10" height="10" viewBox="0 0 10 10" fill="white"><polygon points="2,1 9,5 2,9"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- Anime Popup container -->
+<div id="fuji-popup-overlay" class="fuji-anime-overlay" style="display:none" onclick="closePopup()"></div>
+
+<!-- Main -->
+<div id="fuji26">
+
+<!-- HERO -->
+<section class="f-hero">
+  <div class="f-circle"></div>
+  <div class="f-circle"></div>
+  <div class="f-circle"></div>
+  <div class="f-circle miku" style="width:650px;height:650px;animation-delay:3s"></div>
+  <div class="f-particle" style="width:5px;height:5px;background:#39C5BB;left:12%;animation-duration:12s;animation-delay:0s;opacity:.5"></div>
+  <div class="f-particle" style="width:3px;height:3px;background:#C8102E;left:28%;animation-duration:15s;animation-delay:2s;opacity:.35"></div>
+  <div class="f-particle" style="width:4px;height:4px;background:#39C5BB;left:55%;animation-duration:10s;animation-delay:4s;opacity:.45"></div>
+  <div class="f-particle" style="width:6px;height:6px;background:#E0DDD6;left:72%;animation-duration:18s;animation-delay:1s;opacity:.4"></div>
+  <div class="f-particle" style="width:3px;height:3px;background:#39C5BB;left:85%;animation-duration:13s;animation-delay:6s;opacity:.5"></div>
+  <svg class="f-fuji-svg" viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg">
+    <path d="M450 18 L75 258 L825 258 Z" fill="#C8102E"/>
+    <path d="M450 18 L400 75 L500 75 Z" fill="white" opacity=".5"/>
+  </svg>
+  <svg class="f-miku-watermark" width="90" height="140" viewBox="0 0 90 140" fill="none">
+    <ellipse cx="45" cy="95" rx="18" ry="28" fill="#39C5BB"/>
+    <circle cx="45" cy="52" r="18" fill="#39C5BB"/>
+    <path d="M27 52 Q5 40 2 70 Q0 90 18 85 Q10 65 20 55 Z" fill="#39C5BB"/>
+    <path d="M63 52 Q85 40 88 70 Q90 90 72 85 Q80 65 70 55 Z" fill="#39C5BB"/>
+    <path d="M45 34 Q48 18 52 12" stroke="#39C5BB" stroke-width="3" stroke-linecap="round"/>
+    <path d="M40 80 L45 90 L50 80 L45 78 Z" fill="#C8102E"/>
+  </svg>
+  <div class="f-hero-label">2026 · Japan · Mt. Fuji Expedition</div>
+  <div class="f-hero-title">26in<span>Mt.</span>Fuji</div>
+  <div class="f-hero-sub">七月八日 — 七月十二日</div>
+  <div class="f-hero-date">07.08 — 07.12 · 2026 · HKG → NRT</div>
+  <div class="f-miku-badge">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#39C5BB" stroke-width="1"/><path d="M4 6 L6 8 L8 4" stroke="#39C5BB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    初音ミク · 始まりの未来 · BGM Playing
+  </div>
+  <div class="f-countdown-wrap">
+    <div class="f-cd-label">出發倒計時 Countdown</div>
+    <div class="f-countdown">
+      <div class="f-cb"><div class="f-num" id="fuji-days">--</div><div class="f-unit">Days</div></div>
+      <div class="f-sep">·</div>
+      <div class="f-cb"><div class="f-num" id="fuji-hours">--</div><div class="f-unit">Hours</div></div>
+      <div class="f-sep">·</div>
+      <div class="f-cb"><div class="f-num" id="fuji-mins">--</div><div class="f-unit">Mins</div></div>
+      <div class="f-sep">·</div>
+      <div class="f-cb"><div class="f-num" id="fuji-secs">--</div><div class="f-unit">Secs</div></div>
+    </div>
+  </div>
+  <div class="f-scroll"><div class="f-scroll-line"></div>Scroll</div>
+</section>
+
+<div class="f-jp-border"></div>
+
+<!-- NOTICES -->
+<div class="f-notices">
+  <div class="f-notices-inner">
+    <div class="f-section-label">重要預約提醒</div>
+    <div class="f-notices-grid">
+      <div class="f-ncard">
+        <div class="f-ndate">04.27 · 12:00 HKT / 13:00 JPT</div>
+        <div class="f-ntitle">富士山通行預約開始</div>
+        <div class="f-ndesc">需要線上支付，請提前準備信用卡。¥4,000 通行費</div>
+      </div>
+      <div class="f-ncard">
+        <div class="f-ndate">05.10 · JPT</div>
+        <div class="f-ntitle">富士山ホテル 預約開始</div>
+        <div class="f-ndesc">可以現金支付。¥9,300 · 5月10號開始預約</div>
+      </div>
+      <div class="f-ncard">
+        <div class="f-ndate">07.07 · 出發前一日</div>
+        <div class="f-ntitle">提前購買東京鐵塔票</div>
+        <div class="f-ndesc">東京鑽石之旅體驗票 $40 HKD · 18:00 前15分鐘到達</div>
+      </div>
+      <div class="f-ncard">
+        <div class="f-ndate">Drive · 主文件夾</div>
+        <div class="f-ntitle">📁 企劃文件 · Reels 構思</div>
+        <div class="f-ndesc">內有 Reels 概念構思、電影講稿台詞、Postcard 預訂內容<br>
+          <a href="https://drive.google.com/drive/folders/1JdDo96VjqiqWMx7PfKPFq0QqoucMclfk?usp=sharing" target="_blank" rel="noreferrer" style="color:#39C5BB;font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-decoration:none">→ 開啟 Google Drive</a>
+        </div>
+      </div>
+      <div class="f-ncard" style="border-left-color:transparent">
+        <div class="f-ndate" style="color:#39C5BB">ゆるキャン△ · 聖地巡禮</div>
+        <div class="f-ntitle">河口湖 — 單車 · 露營</div>
+        <div class="f-ndesc">本次行程途經多個《搖曳露營》聖地：大石公園、本栖湖周邊、富士五湖沿線。<br><span style="font-family:'DM Mono',monospace;font-size:.6rem;color:#39C5BB;letter-spacing:.15em">△ YURU CAMP ROUTE</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="f-jp-border"></div>
+
+<!-- YURU CAMP BANNER -->
+<div style="background:#fff;padding:3rem 2rem;border-bottom:1px solid #E0DDD6">
+  <div style="max-width:900px;margin:0 auto;display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
+    <div style="flex-shrink:0;opacity:.85">
+      <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+        <ellipse cx="36" cy="58" rx="22" ry="5" fill="#C8A882" opacity=".5"/>
+        <rect x="14" y="52" width="44" height="7" rx="3.5" fill="#A07840" opacity=".7"/>
+        <path d="M36 14 Q28 26 24 38 Q22 48 36 52 Q50 48 48 38 Q44 26 36 14Z" fill="#FF7A2F" opacity=".85"/>
+        <path d="M36 22 Q30 32 28 40 Q27 47 36 50 Q45 47 44 40 Q42 32 36 22Z" fill="#FFA540"/>
+        <path d="M36 30 Q33 37 33 42 Q33 47 36 49 Q39 47 39 42 Q39 37 36 30Z" fill="#FFD166"/>
+        <circle cx="26" cy="30" r="2" fill="#FF7A2F" opacity=".6"/>
+        <circle cx="46" cy="24" r="1.5" fill="#FFA540" opacity=".5"/>
+      </svg>
+    </div>
+    <div style="flex:1;min-width:200px">
+      <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.4em;color:#39C5BB;text-transform:uppercase;margin-bottom:.5rem">ゆるキャン△ · Yuru Camp Route</div>
+      <div style="font-family:'Shippori Mincho',serif;font-size:1.15rem;font-weight:700;color:#1A1A1A;margin-bottom:.5rem">搖曳露營聖地巡禮</div>
+      <div style="font-size:.8rem;color:#888;line-height:1.75">
+        本次行程途經多個《搖曳露營△》聖地 — 河口湖、西湖、大石公園、本栖湖周邊。<br>
+        <span style="font-family:'DM Mono',monospace;font-size:.68rem;color:#39C5BB;letter-spacing:.12em">「ひとりでも、景色はちゃんとそこにある。」</span>
+      </div>
+      <div style="margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap">
+        <span style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.18em;padding:.15rem .55rem;border:1px solid rgba(57,197,187,.3);color:#39C5BB;border-radius:2px">△ 大石公園</span>
+        <span style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.18em;padding:.15rem .55rem;border:1px solid rgba(57,197,187,.3);color:#39C5BB;border-radius:2px">△ 西湖根場</span>
+        <span style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.18em;padding:.15rem .55rem;border:1px solid rgba(57,197,187,.3);color:#39C5BB;border-radius:2px">△ 留守ヶ岩浜</span>
+        <span style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.18em;padding:.15rem .55rem;border:1px solid rgba(57,197,187,.3);color:#39C5BB;border-radius:2px">△ 河口湖大橋</span>
+        <span style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.18em;padding:.15rem .55rem;border:1px solid rgba(57,197,187,.3);color:#39C5BB;border-radius:2px">△ 湘南海岸</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="f-jp-border"></div>
+
+<!-- TIMELINE -->
+<div class="f-tl-section">
+  <div class="f-section-label">五日行程時間線 · 點擊地點查看聖地巡禮</div>
+
+  <!-- Map quick-nav -->
+  <div style="margin-bottom:2rem;padding:1rem;background:rgba(57,197,187,.04);border:1px solid rgba(57,197,187,.2);border-radius:4px">
+    <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.3em;color:#39C5BB;text-transform:uppercase;margin-bottom:.7rem">
+      🗺 點擊目的地 → 地圖即時更新 + 偵測方圓1公里內動漫聖地
+    </div>
+    <div id="dest-buttons" style="display:flex;flex-wrap:wrap;gap:.4rem"></div>
+  </div>
+
+  <!-- DAY 1 -->
+  <div class="f-day">
+    <div class="f-day-header">
+      <div class="f-day-num">01</div>
+      <div class="f-day-info">
+        <div class="f-day-date">07.08 · WED</div>
+        <div class="f-day-theme">東京 — 動漫 · 攝影</div>
+        <div class="f-day-cin">霓虹燈下的起點</div>
+        <div class="f-day-cin-en">Tokyo, First Frames</div>
+      </div>
+    </div>
+    <div class="f-timeline">
+      <div class="f-tl-item" onclick="handleDest(22.3080,113.9185,1)" title="香港國際機場 T1">
+        <div class="f-dot major"></div>
+        <div class="f-time">00:55 HKT · JETSTAR GK28</div>
+        <div class="f-name">香港國際機場 T1 出發 📍</div>
+        <div class="f-desc">GK28 HKG → NRT · 抵達 06:15 JPT</div>
+        <span class="f-tag red">航班</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.7089,139.7741,1)" title="上野 阿美橫町">
+        <div class="f-dot"></div>
+        <div class="f-time">06:30 — 09:00</div>
+        <div class="f-name">過關 · SKYLINER → 上野 📍</div>
+        <div class="f-desc">T3 → 上野 · SKYLINER 07:20–08:30 / Skyaccess 07:30–09:00</div>
+        <span class="f-tag">交通</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.7089,139.7741,1)" title="阿美橫町">
+        <div class="f-dot major"></div>
+        <div class="f-time">09:30 — 11:00</div>
+        <div class="f-name">上野 · 阿美橫町 📍</div>
+        <div class="f-desc">阿美橫町攝影 · 街道探索 · 早餐：一蘭拉麵 / 大戶屋</div>
+        <span class="f-tag">攝影</span><span class="f-tag">餐飲</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.7147,139.7967,1)" title="淺草寺">
+        <div class="f-dot major"></div>
+        <div class="f-time">11:20 — 12:00</div>
+        <div class="f-name">淺草寺 📍</div>
+        <div class="f-desc">東京最古老寺廟 · 雷門大燈籠攝影 · 茶點 Starbucks</div>
+        <span class="f-tag">文化</span><span class="f-tag">攝影</span>
+        <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 凜在《搖曳露營》動畫開場獨自踏上旅途，這趟東京第一天，也是屬於你一個人的出發。なんか、旅っていいよね。</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.7023,139.7745,1)" title="秋葉原">
+        <div class="f-dot major"></div>
+        <div class="f-time">12:20 — 14:30</div>
+        <div class="f-name">秋葉原 📍</div>
+        <div class="f-desc">中古相機舖 · Animate 動漫店</div>
+        <span class="f-tag red">動漫</span><span class="f-tag">攝影</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.6993,139.7659,1)" title="御茶之水 聖橋">
+        <div class="f-dot"></div>
+        <div class="f-time">14:40 — 15:10</div>
+        <div class="f-name">御茶之水 · 聖橋 📍</div>
+        <div class="f-desc">步行前往 · 攝影打卡地標</div>
+        <span class="f-tag">攝影</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.6793,139.7650,1)" title="鶏soba">
+        <div class="f-dot"></div>
+        <div class="f-time">15:30 — 16:30</div>
+        <div class="f-name">鶏soba 座銀 · KITTE丸の内店 🍜</div>
+        <div class="f-desc">KITTE ガーデン 屋頂花園</div>
+        <span class="f-tag">餐飲</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.6716,139.7652,1)" title="銀座 伊東屋">
+        <div class="f-dot"></div>
+        <div class="f-time">16:45 — 17:15</div>
+        <div class="f-name">銀座 · 伊東屋 📍</div>
+        <div class="f-desc">銀座地標文具店</div>
+        <span class="f-tag">購物</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.6586,139.7454,1)" title="東京鐵塔">
+        <div class="f-dot major"></div>
+        <div class="f-time">17:45 — 19:15</div>
+        <div class="f-name">東京鐵塔 🗼 📍</div>
+        <div class="f-desc">東京鑽石之旅體驗票 · $40 HKD · 18:00 提前15分鐘抵達</div>
+        <span class="f-tag red">必去</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.6595,139.7004,1)" title="渋谷">
+        <div class="f-dot major"></div>
+        <div class="f-time">19:45 — 20:20</div>
+        <div class="f-name">渋谷スクランブル交差点 🚦 📍</div>
+        <div class="f-desc">東京最著名十字路口 · 人潮洶湧的城市脈搏</div>
+        <span class="f-tag">攝影</span><span class="f-tag">夜遊</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.6938,139.7034,1)" title="新宿">
+        <div class="f-dot major"></div>
+        <div class="f-time">20:40 — 21:50</div>
+        <div class="f-name">思い出横丁 · 新宿東口の猫 · 歌舞伎町 🌃 📍</div>
+        <div class="f-desc">思い出横丁燒烤小巷 · 新宿東口的貓咪廣告牌 · 歌舞伎町霓虹夜景</div>
+        <span class="f-tag">攝影</span><span class="f-tag">夜遊</span>
+        <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 新宿的霓虹與野外星空截然不同——但凜偶爾也會獨自逛城市。今晚先把城市刻進相機，明天就騎向山的方向。</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.6938,139.7034,1)" title="Palace Japan Hotel">
+        <div class="f-dot"></div>
+        <div class="f-time">21:55 — 22:45</div>
+        <div class="f-name">新宿 → Palace Japan Hotel</div>
+        <div class="f-desc">搭JR山手線拍攝Reels · 最遲入住2300</div>
+        <span class="f-tag">住宿</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="f-day">
+    <div class="f-day-header">
+      <div class="f-day-num">02</div>
+      <div class="f-day-info">
+        <div class="f-day-date">07.09 · THU</div>
+        <div class="f-day-theme">河口湖 — 單車 · 露營</div>
+        <div class="f-day-cin">沿著富士山騎向日落</div>
+        <div class="f-day-cin-en">Ride Into Blue Hour</div>
+      </div>
+    </div>
+    <div class="f-timeline">
+      <div class="f-tl-item" onclick="handleDest(35.6938,139.7034,2)">
+        <div class="f-dot"></div>
+        <div class="f-time">05:30 — 06:00</div>
+        <div class="f-name">起身 · 簡單梳洗</div>
+        <div class="f-desc">早起準備長途行程</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5054,138.9367,2)" title="新倉山浅間公園">
+        <div class="f-dot"></div>
+        <div class="f-time">08:10 / 08:51 → 11:04 / 12:17</div>
+        <div class="f-name">新宿 → 大月 → 月江寺 📍</div>
+        <div class="f-desc">JR中央富士急 · 已儲存路線至Google地圖</div>
+        <span class="f-tag">交通</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5054,138.9367,2)" title="新倉山浅間公園">
+        <div class="f-dot major"></div>
+        <div class="f-time">10:45 — 12:00</div>
+        <div class="f-name">新倉山浅間公園 ⛩️ 📍</div>
+        <div class="f-desc">五重塔 + 富士山全景 · 最佳攝影點</div>
+        <span class="f-tag red">必去</span><span class="f-tag">攝影</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5032,138.7635,2)" title="河口湖站">
+        <div class="f-dot"></div>
+        <div class="f-time">14:30 — 15:30</div>
+        <div class="f-name">月江寺 → 河口湖 📍</div>
+        <div class="f-desc">富士急行直達</div>
+        <span class="f-tag">交通</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5032,138.7635,2)" title="河口湖站前Lawson">
+        <div class="f-dot major"></div>
+        <div class="f-time">15:30 — 15:50</div>
+        <div class="f-name">河口湖站前 Lawson + 平交道攝影 📍</div>
+        <div class="f-desc">河口湖站前平交道打卡攝影</div>
+        <span class="f-tag">攝影</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5032,138.7635,2)">
+        <div class="f-dot"></div>
+        <div class="f-time">15:55 — 16:10</div>
+        <div class="f-name">レンタサイクル ぷーさん 🚴</div>
+        <div class="f-desc">租借電動單車 · ¥2,500/晚</div>
+        <span class="f-tag">交通</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5050,138.7720,2)">
+        <div class="f-dot"></div>
+        <div class="f-time">16:10 — 16:50</div>
+        <div class="f-name">Ogino 河口湖店 🛒</div>
+        <div class="f-desc">10分鐘單車前往 · 30分鐘採購露營物資</div>
+        <span class="f-tag">補給</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5080,138.7798,2)" title="河口湖大橋">
+        <div class="f-dot major"></div>
+        <div class="f-time">16:50 — 17:10</div>
+        <div class="f-name">河口湖大橋 🌉 📍</div>
+        <div class="f-desc">拍攝踩單車過橋鏡頭 · 與富士山合照</div>
+        <span class="f-tag red">必拍</span><span class="f-tag">攝影</span>
+        <div class="f-yuru-block"><strong>△ ゆるキャン S1</strong> 此橋亦是凜和なでしこ騎車去本栖湖的路線沿線風景 — 湖面倒映富士山，是搖曳露營最具代表性的構圖之一。</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5120,138.8000,2)" title="長崎公園">
+        <div class="f-dot major"></div>
+        <div class="f-time">17:30 — 17:55</div>
+        <div class="f-name">長崎公園 🌿 📍</div>
+        <div class="f-desc">逗留20分鐘 · 最重要的鏡頭位</div>
+        <span class="f-tag red">必拍</span>
+        <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 大石公園一帶是《搖曳露營》單車旅途的重要場景，湖畔視野絕佳</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5148,138.8035,2)" title="大石公園">
+        <div class="f-dot major"></div>
+        <div class="f-time">17:55 — 18:15</div>
+        <div class="f-name">大石公園 🌸 📍</div>
+        <div class="f-desc">逗留15分鐘 · 重要鏡頭位 · 富士山湖景攝影</div>
+        <span class="f-tag red">必拍</span><span class="f-tag">攝影</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5040,138.8302,2)" title="留守ヶ岩浜">
+        <div class="f-dot major"></div>
+        <div class="f-time">18:15 — 18:50</div>
+        <div class="f-name">留守ヶ岩浜 · 留守ヶ岩 🌅 📍</div>
+        <div class="f-desc">日落前最後一口氣氛 · 沙灘拍攝 · 登上岩石Shot</div>
+        <span class="f-tag red">必看</span><span class="f-tag">攝影</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5025,138.8155,2)" title="福住オートキャンプ場">
+        <div class="f-dot major"></div>
+        <div class="f-time">19:05後</div>
+        <div class="f-name">抵達營地 · 帳篷 · 付款 · ¥1,000 🏕️ 📍</div>
+        <div class="f-desc">Fukuzumi Auto Camping Ground · 福住オートキャンプ場</div>
+        <span class="f-tag red">露營</span>
+        <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 「今日も良いソロキャン日和」— 一個人享受湖邊夜晚，數著星星入睡</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="f-day">
+    <div class="f-day-header">
+      <div class="f-day-num">03</div>
+      <div class="f-day-info">
+        <div class="f-day-date">07.10 · FRI</div>
+        <div class="f-day-theme">富士攻頂 — 登山日</div>
+        <div class="f-day-cin">凌晨四點的山脊線</div>
+        <div class="f-day-cin-en">Above The Clouds</div>
+      </div>
+    </div>
+    <div class="f-timeline">
+      <div class="f-tl-item" onclick="handleDest(35.5025,138.8155,3)">
+        <div class="f-dot"></div>
+        <div class="f-time">03:20 — 03:40</div>
+        <div class="f-name">起身 · 收拾營具</div>
+        <div class="f-desc">準備所有裝備 · 出發前確認物資</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5040,138.8302,3)" title="留守ヶ岩浜">
+        <div class="f-dot major"></div>
+        <div class="f-time">04:00 — 04:30</div>
+        <div class="f-name">營地 → 留守ヶ岩浜 · 留守ヶ岩 📍</div>
+        <div class="f-desc">單車出發 · 回到昨日日落的岩石</div>
+        <span class="f-tag">單車</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5040,138.8302,3)" title="日出">
+        <div class="f-dot major"></div>
+        <div class="f-time">04:30 — 05:20</div>
+        <div class="f-name">留守ヶ岩浜 · 富士山日出 🌅 📍</div>
+        <div class="f-desc">04:30 日出時間 · 岩石、湖面、富士山三位一體的攝影構圖</div>
+        <span class="f-tag red">必看</span><span class="f-tag">攝影</span>
+        <div class="f-yuru-block"><strong>△ ゆるキャン S2</strong> 西湖沿岸是《搖曳露營》第二季なでしこ等人露營的取景地，清晨的湖面與作品氛圍相當令人沉醉</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5148,138.8035,3)" title="大石公園 日出後">
+        <div class="f-dot"></div>
+        <div class="f-time">05:20 — 06:30</div>
+        <div class="f-name">大石公園 · 長崎公園 🌸 📍</div>
+        <div class="f-desc">日出後繼續拍攝 · 富士山倒影湖景</div>
+        <span class="f-tag">攝影</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5080,138.7798,3)" title="楓葉迴廊">
+        <div class="f-dot"></div>
+        <div class="f-time">06:30 — 07:00</div>
+        <div class="f-name">大石公園 → 河口湖楓葉迴廊 📍</div>
+        <div class="f-desc">10分鐘單車 · 楓葉迴廊攝影打卡</div>
+        <span class="f-tag">攝影</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.5032,138.7635,3)" title="河口湖 → 五合目巴士">
+        <div class="f-dot major"></div>
+        <div class="f-time">09:40首選 / 10:30備用</div>
+        <div class="f-name">河口湖 → 五合目巴士 🚌 📍</div>
+        <div class="f-desc">¥1,950 YEN · 1HR</div>
+        <span class="f-tag">交通</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3608,138.7296,3)" title="富士山五合目">
+        <div class="f-dot major"></div>
+        <div class="f-time">10:30 / 11:30 — 12:00</div>
+        <div class="f-name">五合目 · 準備登山 · 小御嶽神社 🏔️ 📍</div>
+        <div class="f-desc">富士山五合目 · 海拔2,305M · 最後調整裝備</div>
+        <div class="f-yuru-block"><strong>⛰️ 向山進発 Next Summit</strong> 五合目是ヤマノススメ Next Summit 葵與日向由須走登山口出發的起點，作品中大量描繪了富士山登山路上的場景。</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3606,138.7274,3)" title="登山 → 八合目">
+        <div class="f-dot major"></div>
+        <div class="f-time">12:00 — 18:00</div>
+        <div class="f-name">登山 → 八合目 富士山ホテル 📍</div>
+        <div class="f-desc">5–6小時 · ¥9,300 YEN · 目標18:00前抵達八合目小屋</div>
+        <span class="f-tag red">登山</span>
+        <div class="f-yuru-block"><strong>⛰️ 向山進発 Next Summit</strong> 《向山進發 Next Summit》EP11–12完整描繪了由須走五合目至八合目的登山過程，與你的登山路線高度重疊！每一塊岩石都可能是動畫中的場景。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="f-day">
+    <div class="f-day-header">
+      <div class="f-day-num">04</div>
+      <div class="f-day-info">
+        <div class="f-day-date">07.11 · SAT</div>
+        <div class="f-day-theme">攻頂御來光 + 箱根</div>
+        <div class="f-day-cin">在日本最高點迎接日出</div>
+        <div class="f-day-cin-en">The Summit Morning</div>
+      </div>
+    </div>
+    <div class="f-timeline">
+      <div class="f-tl-item" onclick="handleDest(35.3606,138.7274,4)" title="富士山頂">
+        <div class="f-dot major"></div>
+        <div class="f-time">01:00</div>
+        <div class="f-name">出發前往山頂 ⛰️ 📍</div>
+        <div class="f-desc">夜間登山 · 注意保暖 · 頭燈必備</div>
+        <span class="f-tag red">登山</span>
+        <div class="f-yuru-block"><strong>⛰️ 向山進発 Next Summit</strong> EP12 最終話 — 葵與日向在黎明前的黑暗中向著山頂進發，那份「向前一步」的感動就是此刻。</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3606,138.7274,4)" title="富士山頂 3776">
+        <div class="f-dot major"></div>
+        <div class="f-time">04:00</div>
+        <div class="f-name">抵達富士山頂 · 3,776M 🍜 📍</div>
+        <div class="f-desc">日本最高峰 · 山頂杯麵當早餐</div>
+        <span class="f-tag red">頂峰</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3606,138.7274,4)" title="御來光">
+        <div class="f-dot major"></div>
+        <div class="f-time">04:35 — 05:00</div>
+        <div class="f-name">御來光 🌄 📍</div>
+        <div class="f-desc">富士山頂日出 · 主要用 Pocket 3 錄影</div>
+        <span class="f-tag red">✦ 高光時刻</span>
+        <div class="f-yuru-block"><strong>⛰️ 向山進発 Next Summit</strong> 「出発しよう！新しい頂へ。」這正是作品最終話的山頂御來光場景。站在3,776米的頂點，與葵共享同一道日出。</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3133,138.7957,4)" title="御殿場">
+        <div class="f-dot major"></div>
+        <div class="f-time">07:45 — 11:50</div>
+        <div class="f-name">御殿場極速落山 📍</div>
+        <div class="f-desc">官方落山 3–3.5小時 · ⚠️ 必須11:55前抵達御殿場口</div>
+        <span class="f-tag red">⚠️ 限時</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.2468,139.0206,4)" title="大涌谷">
+        <div class="f-dot major"></div>
+        <div class="f-time">14:30 — 16:15</div>
+        <div class="f-name">箱根空中纜車 + 大涌谷 🌋 📍</div>
+        <div class="f-desc">桃源台→早雲山 · 大涌谷火山地景</div>
+        <span class="f-tag red">必去</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.1993,139.0268,4)" title="箱根神社">
+        <div class="f-dot major"></div>
+        <div class="f-time">17:00 — 18:30</div>
+        <div class="f-name">箱根海盜船 + 箱根神社 ⛩️ 📍</div>
+        <div class="f-desc">桃源台→箱根町港 · 箱根神社</div>
+        <span class="f-tag red">必去</span>
+        <div class="f-yuru-block"><strong>△ ゆるキャン</strong> 芦ノ湖畔的箱根神社是靜謐之地——就像在山中一個人靜靜泡著腳，等待人生下一段旅程開始。</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3282,139.3417,4)">
+        <div class="f-dot"></div>
+        <div class="f-time">18:38 — 20:13</div>
+        <div class="f-name">箱根 → 平塚 LiveMax</div>
+        <div class="f-desc">LiveMax 平塚 · $273 HKD · 晚餐首選：くら寿司</div>
+        <span class="f-tag">住宿</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="f-day">
+    <div class="f-day-header">
+      <div class="f-day-num">05</div>
+      <div class="f-day-info">
+        <div class="f-day-date">07.12 · SUN</div>
+        <div class="f-day-theme">江之島 · 鎌倉 — 離港</div>
+        <div class="f-day-cin">讓海風把旅程慢慢吹完</div>
+        <div class="f-day-cin-en">Last Train To Summer</div>
+      </div>
+    </div>
+    <div class="f-timeline">
+      <div class="f-tl-item" onclick="handleDest(35.3063,139.4817,5)" title="湘南江之島">
+        <div class="f-dot major"></div>
+        <div class="f-time">08:45 — 09:35</div>
+        <div class="f-name">LiveMax 平塚 → 湘南江之島 📍</div>
+        <div class="f-desc">JT11-07 · SMR1-8</div>
+        <span class="f-tag">交通</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3063,139.4817,5)" title="新江ノ島水族館">
+        <div class="f-dot major"></div>
+        <div class="f-time">10:00 — 12:00</div>
+        <div class="f-name">新江ノ島水族館 🐟 📍</div>
+        <div class="f-desc">$85 HKD · 沿海水族館 · 讓疲倦的大腦稍為放鬆</div>
+        <span class="f-tag red">必去</span>
+        <div class="f-yuru-block"><strong>△ ゆるキャン 劇場版</strong> 湘南海岸是《搖曳露營》劇場版的主要舞台，此刻在海邊感受終章的氛圍</div>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3066,139.5021,5)" title="鎌倉高校前">
+        <div class="f-dot major"></div>
+        <div class="f-time">12:55 — 13:30</div>
+        <div class="f-name">鎌倉高校前 🚃 📍</div>
+        <div class="f-desc">灌籃高手動漫聖地 · 模仿拍攝動漫場景</div>
+        <span class="f-tag red">動漫聖地</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3047,139.5111,5)" title="七里ヶ浜">
+        <div class="f-dot"></div>
+        <div class="f-time">13:45 — 14:10</div>
+        <div class="f-name">七里ヶ浜 📍</div>
+        <div class="f-desc">七里浜沿岸風景攝影</div>
+        <span class="f-tag">攝影</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.3047,139.5111,5)">
+        <div class="f-dot major"></div>
+        <div class="f-time">14:40 — 17:30</div>
+        <div class="f-name">鎌倉 → NRT T3 ✈️</div>
+        <div class="f-desc">JO + KS Skyaccess · ¥2,316 YEN</div>
+        <span class="f-tag red">回程</span>
+      </div>
+      <div class="f-tl-item" onclick="handleDest(35.7765,140.3867,5)">
+        <div class="f-dot major"></div>
+        <div class="f-time">20:10 — 23:55</div>
+        <div class="f-name">JETSTAR GK27 · NRT → HKG 🌙</div>
+        <div class="f-desc">最後告別日本 · 機上認真剪接</div>
+        <span class="f-tag red">航班</span>
+      </div>
+    </div>
+  </div>
+</div><!-- /f-tl-section -->
+
+<div class="f-jp-border"></div>
+
+<!-- BUDGET -->
+<div class="f-budget">
+  <div class="f-budget-inner">
+    <div class="f-section-label">財政預算概覽</div>
+    <div class="f-budget-grid">
+      <div class="f-bcard"><div class="f-blabel">機票</div><div class="f-bamt">$1,344<small> HKD</small></div></div>
+      <div class="f-bcard"><div class="f-blabel">膳食 + 購物</div><div class="f-bamt">$1,250<small> HKD</small></div></div>
+      <div class="f-bcard"><div class="f-blabel">交通費</div><div class="f-bamt">$800<small> HKD</small></div></div>
+      <div class="f-bcard"><div class="f-blabel">酒店 + 住宿</div><div class="f-bamt">$948<small> HKD</small></div></div>
+      <div class="f-bcard"><div class="f-blabel">景點 + 紀念品</div><div class="f-bamt">$670<small> HKD</small></div></div>
+    </div>
+    <div class="f-btotal">
+      <div class="f-btotal-label">總支出預算</div>
+      <div class="f-btotal-amt">$4,952 HKD</div>
+    </div>
+  </div>
+</div>
+
+<div class="f-jp-border"></div>
+
+<!-- GEAR -->
+<div class="f-gear">
+  <div class="f-section-label">行李裝備清單</div>
+  <div class="f-gear-grid">
+    <div class="f-gcol">
+      <div class="f-gcol-title">背包 · 服裝</div>
+      <div class="f-gitem">OSPREY ATMOS 65 · 2.15KG</div>
+      <div class="f-gitem">NatureHike 睡袋 · 1.29KG</div>
+      <div class="f-gitem">便服 × 1套</div>
+      <div class="f-gitem">登山服套裝 × 1套</div>
+      <div class="f-gitem">Banano 羽絨</div>
+      <div class="f-gitem">Montbell Gore-Tex 防水外套</div>
+      <div class="f-gitem">NatureHike 雨褲</div>
+      <div class="f-gitem">Montbell Gore-Tex 帽</div>
+      <div class="f-gitem">Solomon Gore-Tex 行山鞋</div>
+      <div class="f-gitem">厚羊毛襪</div>
+      <div class="f-gitem">LCC機衫</div>
+      <div class="f-gitem">便攜U形枕</div>
+      <div class="f-gitem">單車手套</div>
+      <div class="f-gitem">鋁箔防潮墊</div>
+      <div class="f-gitem">背囊防雨套</div>
+      <div class="f-gitem">暖包 × 2</div>
+    </div>
+    <div class="f-gcol">
+      <div class="f-gcol-title">攝影器材</div>
+      <div class="f-gitem">CANON 70D 18-200mm</div>
+      <div class="f-gitem">電池 × 3</div>
+      <div class="f-gitem">DJI POCKET 3</div>
+      <div class="f-gitem">Canon 充電線</div>
+      <div class="f-gitem">MI 90W 充電頭線</div>
+      <div class="f-gitem">Pocket 3 三腳架</div>
+      <div class="f-gitem">1/4接口三腳架 · 0.45KG</div>
+      <div class="f-gitem">相機肩帶</div>
+    </div>
+    <div class="f-gcol">
+      <div class="f-gcol-title">電子 · 文件</div>
+      <div class="f-gitem">護照</div>
+      <div class="f-gitem">銀包 (建議 ¥40,000)</div>
+      <div class="f-gitem">日幣整理器</div>
+      <div class="f-gitem">Redmi Note 11t Pro</div>
+      <div class="f-gitem">iPhone 11 Pro</div>
+      <div class="f-gitem">AirPods Pro</div>
+      <div class="f-gitem">電子器材袋 · 0.90KG</div>
+      <div class="f-gitem">　ZMI 25000mAh PowerBank</div>
+      <div class="f-gitem">　Mi 5000mAh PowerBank</div>
+      <div class="f-gitem">　SD卡閱讀器 · 後備TF&SD</div>
+      <div class="f-gitem">行李秤重器</div>
+      <div class="f-gitem">Marker 筆</div>
+      <div class="f-gitem">便利貼</div>
+      <div class="f-gitem">帳篷營釘 · 0.38KG</div>
+    </div>
+    <div class="f-gcol">
+      <div class="f-gcol-title">隨身 · 富士物資</div>
+      <div class="f-gitem">頭燈 ⚡</div>
+      <div class="f-gitem">鞋套</div>
+      <div class="f-gitem">基本藥物</div>
+      <div class="f-gitem">防曬霜</div>
+      <div class="f-gitem">運動毛巾</div>
+      <div class="f-gitem">飲用水 2L × 2</div>
+      <div class="f-gitem">能量棒</div>
+      <div class="f-gitem">朱古力</div>
+      <div class="f-gitem">電解質粉</div>
+    </div>
+  </div>
+</div>
+
+<div class="f-jp-border"></div>
+
+<!-- YURU CAMP SECTION -->
+<div style="padding:4rem 2rem;max-width:900px;margin:0 auto">
+  <div class="f-section-label">動漫聖地巡禮 · 行程對照</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin-top:.5rem">
+    <div style="padding:1.2rem;border:1px solid rgba(57,197,187,.4);border-radius:3px;background:rgba(57,197,187,.08);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:#39C5BB"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:.6rem;color:#39C5BB;letter-spacing:.2em;margin-bottom:.4rem">DAY 2 · △ ゆるキャン△</div>
+      <div style="font-family:'Shippori Mincho',serif;font-size:.95rem;font-weight:700;margin-bottom:.3rem">大石公園 · 長崎公園 · 河口湖大橋</div>
+      <div style="font-size:.75rem;color:#888;line-height:1.65">なでしこ與凜初遇的富士湖畔。薰衣草花田配上逆光富士山，是《搖曳露營》最具代表性的構圖之一。河口湖大橋亦是多集單車旅途的必經之路。</div>
+    </div>
+    <div style="padding:1.2rem;border:1px solid rgba(57,197,187,.4);border-radius:3px;background:rgba(57,197,187,.08);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:#2eaadb"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:.6rem;color:#2eaadb;letter-spacing:.2em;margin-bottom:.4rem">DAY 2-3 · △ ゆるキャン△ S2</div>
+      <div style="font-family:'Shippori Mincho',serif;font-size:.95rem;font-weight:700;margin-bottom:.3rem">西湖 · 留守ヶ岩浜</div>
+      <div style="font-size:.75rem;color:#888;line-height:1.65">《搖曳露營》第二季後半的主要舞台。湖邊岩石、夕陽、帳篷——作品中最安靜美麗的片段在這裡發生。</div>
+    </div>
+    <div style="padding:1.2rem;border:1px solid rgba(200,16,46,.4);border-radius:3px;background:rgba(200,16,46,.05);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:#f76e3c"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:.6rem;color:#f76e3c;letter-spacing:.2em;margin-bottom:.4rem">DAY 3-4 · ⛰️ 向山進発 Next Summit</div>
+      <div style="font-family:'Shippori Mincho',serif;font-size:.95rem;font-weight:700;margin-bottom:.3rem">須走五合目 → 山頂 · 御來光</div>
+      <div style="font-size:.75rem;color:#888;line-height:1.65">EP11–12完整描繪了由須走五合目攻頂全程。你將踏上與葵相同的山路，在同一個山頂看同一道日出。</div>
+    </div>
+    <div style="padding:1.2rem;border:1px solid rgba(57,197,187,.4);border-radius:3px;background:rgba(57,197,187,.08);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:#39C5BB"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:.6rem;color:#39C5BB;letter-spacing:.2em;margin-bottom:.4rem">DAY 5 · △ ゆるキャン△ 劇場版</div>
+      <div style="font-family:'Shippori Mincho',serif;font-size:.95rem;font-weight:700;margin-bottom:.3rem">湘南海岸 · 七里ヶ浜</div>
+      <div style="font-size:.75rem;color:#888;line-height:1.65">《搖曳露營》劇場版以成年後的主角們重聚湘南為故事，七里ヶ浜的海浪聲是整部作品最後的餘韻。</div>
+    </div>
+  </div>
+  <div style="margin-top:1.2rem;padding:.9rem 1.1rem;border:1px dashed rgba(57,197,187,.3);border-radius:3px;font-size:.74rem;color:#888;line-height:1.8;text-align:center">
+    <span style="font-family:'Shippori Mincho',serif;color:#39C5BB;font-size:.85rem">「山は逃げないから、ゆっくり行こう。」</span><br>
+    <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.15em">山不會跑掉，所以慢慢走就好。— ゆるキャン△</span>
+  </div>
+</div>
+
+<div class="f-jp-border"></div>
+
+<!-- GOOGLE MAP EMBED -->
+<div style="padding:4rem 2rem;background:#F5F3EE;border-bottom:1px solid #E0DDD6">
+  <div style="max-width:900px;margin:0 auto">
+    <div class="f-section-label">26inTYO! 🗻 · Samuel Yuen · 互動地圖</div>
+    <div style="position:relative;border:1px solid #E0DDD6;overflow:hidden;background:#fff">
+      <div style="padding:.8rem 1.2rem;border-bottom:1px solid #E0DDD6;display:flex;align-items:center;gap:.6rem">
+        <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.25em;color:#39C5BB;text-transform:uppercase">可拖動地圖</span>
+        <span style="font-family:'DM Mono',monospace;font-size:.58rem;color:#888">· 所有景點已標記 · Samuel Yuen 製作</span>
+      </div>
+      <iframe src="https://www.google.com/maps/d/embed?mid=1ZH8OcTDsBgeu4TsTtNEFV-i81peIoiE&ehbc=2E312F&noprof=1" width="100%" height="520" style="border:0;display:block" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div style="margin-top:.8rem;font-family:'DM Mono',monospace;font-size:.58rem;color:#888;letter-spacing:.15em;text-align:right">
+      26inMt-Fuji · Full Route Map · 2026.07.08–12
+    </div>
+  </div>
+</div>
+
+<div class="f-jp-border"></div>
+
+<!-- FOOTER -->
+<div class="f-footer">
+  <div>26inMt-Fuji · <span>07.08 — 07.12 · 2026</span> · HKG → NRT → HKG</div>
+  <div style="margin-top:.4rem;opacity:.5">富士山 · 3,776M · Japan</div>
+  <div class="f-footer-miku">始まりの未来 · 初音ミク · ♪</div>
+  <div style="margin-top:.5rem;font-size:.5rem;opacity:.4">聖地巡禮データ提供: Anitabi.cn · CC BY-NC-SA 4.0</div>
+</div>
+
+</div><!-- /#fuji26 -->
+
+<script>
+// ═══════════════════════════════════════════
+// ANIME LIST with all bangumi IDs
+// ═══════════════════════════════════════════
+const ANIME_LIST = [
+  { id: 207195,  name: 'ゆるキャン△ Season 1', nameCn: '搖曳露營 S1',     color: '#39C5BB', emoji: '🏕️' },
+  { id: 262897,  name: 'ゆるキャン△ Season 2', nameCn: '搖曳露營 S2',     color: '#2eaadb', emoji: '🏕️' },
+  { id: 290980,  name: 'ヤマノススメ Next Summit', nameCn: '向山進發 NS',  color: '#f76e3c', emoji: '⛰️' },
+  { id: 513345,  name: '薫る花は凛と咲く',     nameCn: '薰香花朵凜然綻放', color: '#e06fa0', emoji: '🌸' },
+  { id: 364450,  name: 'Lycoris Recoil',       nameCn: 'Lycoris Recoil',  color: '#c0392b', emoji: '🔫' },
+  { id: 428735,  name: "BanG Dream! It's MyGO!!!!!", nameCn: 'BanG Dream MyGO', color: '#8e44ad', emoji: '🎸' },
+  { id: 240038,  name: '青春ブタ野郎',           nameCn: '青春豬頭少年',   color: '#1c398e', emoji: '🐇' },
+  { id: 328609,  name: 'ぼっち・ざ・ろっく！',   nameCn: '孤獨搖滾',       color: '#ff428e', emoji: '🎸' },
+];
+
+// ═══════════════════════════════════════════
+// HARDCODED FALLBACK POINTS (from the anitabi URLs provided)
+// These are guaranteed to show near our destinations
+// ═══════════════════════════════════════════
+const HARDCODED_POINTS = [
+  // ── ゆるキャン△ S1 — 河口湖 area ──────────────────
+  { id:'4jw8epa',  name:'河口湖大橋',           cn:'河口湖大橋',           image:'https://image.anitabi.cn/points/207195/4jw8epa.jpg?plan=h160',   ep:1,  geo:[35.5224,138.756],  animeId:207195, animeName:'ゆるキャン△ Season 1', animeCn:'搖曳露營 S1',    animeColor:'#39C5BB', animeEmoji:'🏕️' },
+  { id:'4ie4b6p',  name:'河口湖湖畔',           cn:'河口湖 · 湖畔',        image:'https://image.anitabi.cn/points/207195/4ie4b6p.jpg?plan=h160',   ep:2,  geo:[35.5224,138.756],  animeId:207195, animeName:'ゆるキャン△ Season 1', animeCn:'搖曳露營 S1',    animeColor:'#39C5BB', animeEmoji:'🏕️' },
+  { id:'051c48b7', name:'河口湖 · 大石公園エリア',cn:'大石公園 周邊',       image:'https://image.anitabi.cn/points/207195/051c48b7.jpg?plan=h160', ep:3,  geo:[35.5226,138.746],  animeId:207195, animeName:'ゆるキャン△ Season 1', animeCn:'搖曳露營 S1',    animeColor:'#39C5BB', animeEmoji:'🏕️' },
+  { id:'288cf8cd', name:'大石公園 富士山ビュー', cn:'大石公園 富士山景觀',  image:'https://image.anitabi.cn/points/207195/288cf8cd.jpg?plan=h160', ep:3,  geo:[35.5226,138.746],  animeId:207195, animeName:'ゆるキャン△ Season 1', animeCn:'搖曳露營 S1',    animeColor:'#39C5BB', animeEmoji:'🏕️' },
+  // ── 向山進発 Next Summit — 富士山五合目・山頂 ───────
+  { id:'93ec3d8f', name:'富士山五合目 須走口',  cn:'須走五合目登山口',      image:'https://image.anitabi.cn/points/290980/93ec3d8f.jpg?plan=h160', ep:11, geo:[35.3607,138.7337], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS',  animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'13e9d3ed', name:'須走ルート 登山道',   cn:'須走路線 登山道',        image:'https://image.anitabi.cn/points/290980/13e9d3ed.jpg?plan=h160', ep:12, geo:[35.3607,138.7337], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS',  animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'0f982887', name:'富士山 登山道',        cn:'富士山 登山途中',        image:'https://image.anitabi.cn/points/290980/0f982887.jpg?plan=h160', ep:12, geo:[35.3634,138.7355], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS',  animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'727ece54', name:'富士山頂 火口',        cn:'富士山頂 火口',          image:'https://image.anitabi.cn/points/290980/727ece54.jpg?plan=h160', ep:12, geo:[35.3505,138.7515], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS',  animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'0621f1b7', name:'富士山頂 御来光',      cn:'富士山頂 御來光',        image:'https://image.anitabi.cn/points/290980/0621f1b7.jpg?plan=h160', ep:12, geo:[35.3549,138.7453], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS',  animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'58cf6750', name:'御殿場口下山道',       cn:'御殿場口 下山途中',      image:'https://image.anitabi.cn/points/290980/58cf6750.jpg?plan=h160', ep:12, geo:[35.3361,138.7905], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS',  animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'1cc3c7c4', name:'御殿場駅',             cn:'御殿場站',               image:'https://image.anitabi.cn/points/290980/1cc3c7c4_1733160428491.jpg?plan=h160', ep:11, geo:[35.3004,138.9339], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS', animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  // ── 薫る花は凛と咲く — 湘南 ──────────────────────
+  { id:'2q5xrbd',  name:'湘南 · 江之島エリア', cn:'湘南 · 江之島周邊',     image:'https://image.anitabi.cn/points/513345/2q5xrbd.jpg?plan=h160',  ep:1,  geo:[35.3285,139.4054], animeId:513345, animeName:'薫る花は凛と咲く',    animeCn:'薰香花朵凜然綻放', animeColor:'#e06fa0', animeEmoji:'🌸' },
+  // ── ゆるキャン△ — 向山進発 NS — additional confirmed points ──
+  { id:'19e7af58', name:'須走口五合目バス停',   cn:'須走五合目巴士站',       image:'https://image.anitabi.cn/points/290980/19e7af58_1733160525963.jpg?plan=h160', ep:11, geo:[35.3657,138.7787], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS', animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'e89bcb66', name:'標高2000mの標識',      cn:'海拔2000m標識',          image:'https://image.anitabi.cn/points/290980/e89bcb66_1733160744385.jpg?plan=h160', ep:12, geo:[35.3684,138.7768], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS', animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'aca7e9ef', name:'須走ルート五合目登山道',cn:'須走五合目登山道',       image:'https://image.anitabi.cn/points/290980/aca7e9ef_1733160762103.jpg?plan=h160', ep:12, geo:[35.3685,138.7765], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS', animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'fced377d', name:'須走ルート五合目登山道2',cn:'須走五合目登山道 2',    image:'https://image.anitabi.cn/points/290980/fced377d_1733160779617.jpg?plan=h160', ep:12, geo:[35.3687,138.7727], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS', animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  // ── Lycoris Recoil — 浅草 area ────────────────────
+  { id:'4t2xtag0b', name:'浅草寺',              cn:'淺草寺',                 image:'https://image.anitabi.cn/points/364450/4t2xtag0b.jpg?plan=h160', ep:5, geo:[35.7146,139.7967], animeId:364450, animeName:'Lycoris Recoil',      animeCn:'Lycoris Recoil',  animeColor:'#c0392b', animeEmoji:'🔫' },
+  { id:'4t2xtafho', name:'雷門',               cn:'雷門',                   image:'https://image.anitabi.cn/points/364450/4t2xtafho.jpg?plan=h160', ep:5, geo:[35.711,139.7963],  animeId:364450, animeName:'Lycoris Recoil',      animeCn:'Lycoris Recoil',  animeColor:'#c0392b', animeEmoji:'🔫' },
+  { id:'4t2xtag2p', name:'新宿アルタ前',        cn:'新宿ALTA前',             image:'https://image.anitabi.cn/points/364450/4t2xtag2p.jpg?plan=h160', ep:10, geo:[35.6921,139.701],  animeId:364450, animeName:'Lycoris Recoil',      animeCn:'Lycoris Recoil',  animeColor:'#c0392b', animeEmoji:'🔫' },
+  { id:'4t2xtageb', name:'スクランブル交差点',  cn:'澀谷十字路口',           image:'https://image.anitabi.cn/points/364450/4t2xtageb.jpg?plan=h160', ep:10, geo:[35.6593,139.7007], animeId:364450, animeName:'Lycoris Recoil',      animeCn:'Lycoris Recoil',  animeColor:'#c0392b', animeEmoji:'🔫' },
+  { id:'4t2xtagd9', name:'アメ横',             cn:'阿美橫町',               image:'https://image.anitabi.cn/points/364450/4t2xtagd9.jpg?plan=h160', ep:10, geo:[35.7077,139.7745], animeId:364450, animeName:'Lycoris Recoil',      animeCn:'Lycoris Recoil',  animeColor:'#c0392b', animeEmoji:'🔫' },
+  { id:'4t2xtag5e', name:'ユニカビジョン新宿',  cn:'新宿Unica Vision',       image:'https://image.anitabi.cn/points/364450/4t2xtag5e.jpg?plan=h160', ep:11, geo:[35.6936,139.7003], animeId:364450, animeName:'Lycoris Recoil',      animeCn:'Lycoris Recoil',  animeColor:'#c0392b', animeEmoji:'🔫' },
+  // ── ヤマノススメ NS — extra Fuji spots ─────────────
+  { id:'3c70a231', name:'冨士浅間神社の鳥居',  cn:'富士浅間神社鳥居',       image:'https://image.anitabi.cn/points/290980/3c70a231_1733160492060.jpg?plan=h160', ep:11, geo:[35.3618,138.8629], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS', animeColor:'#f76e3c', animeEmoji:'⛰️' },
+  { id:'4d225c34', name:'JAふじ伊豆 須走支店', cn:'JAふじ伊豆 須走支店',    image:'https://image.anitabi.cn/points/290980/4d225c34_1733160479074.jpg?plan=h160', ep:11, geo:[35.3611,138.8705], animeId:290980, animeName:'ヤマノススメ Next Summit', animeCn:'向山進發 NS', animeColor:'#f76e3c', animeEmoji:'⛰️' },
+];
+
+// ═══════════════════════════════════════════
+// DESTINATIONS
+// ═══════════════════════════════════════════
+const DESTINATIONS = [
+  { name:'香港國際機場',       lat:22.3080, lng:113.9185, day:1 },
+  { name:'上野 · 阿美橫町',   lat:35.7089, lng:139.7741, day:1 },
+  { name:'淺草寺',             lat:35.7147, lng:139.7967, day:1 },
+  { name:'秋葉原',             lat:35.7023, lng:139.7745, day:1 },
+  { name:'東京鐵塔',           lat:35.6586, lng:139.7454, day:1 },
+  { name:'渋谷',               lat:35.6595, lng:139.7004, day:1 },
+  { name:'新宿',               lat:35.6938, lng:139.7034, day:1 },
+  { name:'新倉山浅間公園',     lat:35.5054, lng:138.9367, day:2 },
+  { name:'河口湖站',           lat:35.5032, lng:138.7635, day:2 },
+  { name:'河口湖大橋',         lat:35.5080, lng:138.7798, day:2 },
+  { name:'大石公園',           lat:35.5148, lng:138.8035, day:2 },
+  { name:'留守ヶ岩浜',         lat:35.5040, lng:138.8302, day:2 },
+  { name:'福住キャンプ場',     lat:35.5025, lng:138.8155, day:2 },
+  { name:'富士山五合目',       lat:35.3608, lng:138.7296, day:3 },
+  { name:'富士山頂 3,776M',    lat:35.3606, lng:138.7274, day:4 },
+  { name:'御殿場口',           lat:35.3133, lng:138.7957, day:4 },
+  { name:'箱根大涌谷',         lat:35.2468, lng:139.0206, day:4 },
+  { name:'箱根神社',           lat:35.1993, lng:139.0268, day:4 },
+  { name:'新江ノ島水族館',     lat:35.3063, lng:139.4817, day:5 },
+  { name:'鎌倉高校前',         lat:35.3066, lng:139.5021, day:5 },
+  { name:'七里ヶ浜',           lat:35.3047, lng:139.5111, day:5 },
+];
+
+const DAY_COLORS = { 1:'#C8102E', 2:'#39C5BB', 3:'#C8102E', 4:'#C8102E', 5:'#39C5BB' };
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let mapInstance = null;
+let markersLayer = null;
+let allPoints = [...HARDCODED_POINTS];
+let activeDay = null;
+let popupResults = [];
+let popupIdx = 0;
+
+// ═══════════════════════════════════════════
+// HAVERSINE
+// ═══════════════════════════════════════════
+function haversine(lat1, lon1, lat2, lon2) {
+  const R = 6371000;
+  const p1 = lat1 * Math.PI / 180, p2 = lat2 * Math.PI / 180;
+  const dp = (lat2-lat1) * Math.PI / 180, dl = (lon2-lon1) * Math.PI / 180;
+  const a = Math.sin(dp/2)**2 + Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+// ═══════════════════════════════════════════
+// MAP INIT
+// ═══════════════════════════════════════════
+function initMap() {
+  const el = document.getElementById('fuji-map-bg');
+  if (!el || mapInstance) return;
+  mapInstance = L.map(el, {
+    center:[35.5,138.7], zoom:8,
+    zoomControl:false, attributionControl:false,
+    dragging:false, scrollWheelZoom:false,
+    doubleClickZoom:false, touchZoom:false, keyboard:false,
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    subdomains:'abcd', maxZoom:19,
+  }).addTo(mapInstance);
+  markersLayer = L.layerGroup().addTo(mapInstance);
+  renderMarkers();
+}
+
+function flyMap(lat, lng, zoom) {
+  if (!mapInstance) return;
+  mapInstance.flyTo([lat, lng], zoom, { animate:true, duration:1.2 });
+}
+
+function renderMarkers() {
+  if (!markersLayer) return;
+  markersLayer.clearLayers();
+  allPoints.forEach(pt => {
+    if (!pt.geo || pt.geo.length < 2) return;
+    const svg = `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="7" fill="${pt.animeColor}" fill-opacity="0.85" stroke="white" stroke-width="2"/><circle cx="10" cy="10" r="2.5" fill="white"/></svg>`;
+    const icon = L.divIcon({ className:'', html:svg, iconSize:[20,20], iconAnchor:[10,10] });
+    const m = L.marker([pt.geo[0], pt.geo[1]], { icon });
+    m.bindTooltip(`<span style="font-family:'DM Mono',monospace;font-size:.6rem;color:${pt.animeColor}">${pt.animeEmoji} ${pt.cn||pt.name}</span>`, { permanent:false, direction:'top', offset:[0,-8] });
+    markersLayer.addLayer(m);
+  });
+}
+
+// ═══════════════════════════════════════════
+// FETCH ANIME POINTS (background)
+// ═══════════════════════════════════════════
+async function fetchAnimePoints() {
+  for (const anime of ANIME_LIST) {
+    try {
+      const res = await fetch(`https://api.anitabi.cn/bangumi/${anime.id}/points/detail?haveImage=true`, {
+        signal: AbortSignal.timeout(8000)
+      });
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (!Array.isArray(data)) continue;
+      const newPts = data
+        .filter(pt => pt.geo && pt.image)
+        .map(pt => ({
+          ...pt,
+          animeId: anime.id,
+          animeName: anime.name,
+          animeCn: anime.nameCn,
+          animeColor: anime.color,
+          animeEmoji: anime.emoji,
+        }));
+      // Merge, avoiding duplicates by id
+      const existingIds = new Set(allPoints.map(p => p.id));
+      const fresh = newPts.filter(p => !existingIds.has(p.id));
+      allPoints = allPoints.concat(fresh);
+      renderMarkers();
+    } catch(e) { /* silently ignore */ }
+  }
+}
+
+// ═══════════════════════════════════════════
+// DESTINATION CLICK HANDLER
+// ═══════════════════════════════════════════
+function handleDest(lat, lng, day) {
+  activeDay = day;
+  flyMap(lat, lng, 14);
+  updateDestButtons();
+
+  // Detect within 1km
+  const nearby = allPoints
+    .map(pt => ({ point: pt, distance: haversine(lat, lng, pt.geo[0], pt.geo[1]) }))
+    .filter(r => r.distance <= 1000)
+    .sort((a,b) => a.distance - b.distance)
+    .slice(0, 10);
+
+  if (nearby.length > 0) {
+    showPopup(nearby, 0);
+  }
+}
+
+// ═══════════════════════════════════════════
+// POPUP
+// ═══════════════════════════════════════════
+function showPopup(results, idx) {
+  popupResults = results;
+  popupIdx = idx;
+  renderPopup();
+  document.getElementById('fuji-popup-overlay').style.display = 'flex';
+}
+
+function closePopup() {
+  document.getElementById('fuji-popup-overlay').style.display = 'none';
+}
+
+function renderPopup() {
+  if (!popupResults.length) return;
+  const { point, distance } = popupResults[popupIdx];
+  const distStr = distance < 1000 ? `${Math.round(distance)}m` : `${(distance/1000).toFixed(1)}km`;
+  const imgSrc = point.image ? point.image.replace('?plan=h160','?plan=h360') : '';
+  const label = point.cn || point.name;
+  const nav = popupResults.length > 1 ? `
+    <div style="border-top:1px solid #E0DDD6;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-family:'DM Mono',monospace;font-size:.55rem;color:#888;letter-spacing:.12em">${popupIdx+1} / ${popupResults.length} 附近聖地</span>
+      <div style="display:flex;gap:.4rem">
+        <button onclick="navPopup(-1)" ${popupIdx===0?'disabled':''} style="font-family:'DM Mono',monospace;font-size:.58rem;padding:.2rem .6rem;border:1px solid #E0DDD6;background:#fff;cursor:pointer;opacity:${popupIdx===0?.4:1};border-radius:2px">← Prev</button>
+        <button onclick="navPopup(1)" ${popupIdx===popupResults.length-1?'disabled':''} style="font-family:'DM Mono',monospace;font-size:.58rem;padding:.2rem .6rem;border:1px solid #E0DDD6;background:#fff;cursor:pointer;opacity:${popupIdx===popupResults.length-1?.4:1};border-radius:2px">Next →</button>
+      </div>
+    </div>` : '';
+
+  const popup = document.getElementById('fuji-popup-overlay');
+  popup.innerHTML = `
+    <div class="fuji-anime-popup" style="border:2px solid ${point.animeColor}" onclick="event.stopPropagation()">
+      <div style="padding:.7rem 1rem;background:${point.animeColor};display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <span style="font-size:1.2rem">${point.animeEmoji}</span>
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.22em;color:rgba(255,255,255,.8);text-transform:uppercase">聖地巡禮 · ${distStr} away</div>
+            <div style="font-family:'Shippori Mincho',serif;font-size:.88rem;font-weight:700;color:#fff">${point.animeName} · ${point.animeCn}</div>
+          </div>
+        </div>
+        <button onclick="closePopup()" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0">×</button>
+      </div>
+      ${imgSrc ? `
+      <div style="position:relative;background:#111;aspect-ratio:16/9;overflow:hidden;max-height:240px">
+        <img src="${imgSrc}" alt="${label}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentElement.style.display='none'">
+        ${point.ep ? `<div style="position:absolute;top:.5rem;right:.5rem;background:rgba(0,0,0,.7);color:#fff;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;padding:.2rem .5rem;border-radius:2px">EP ${point.ep}</div>` : ''}
+      </div>` : ''}
+      <div style="padding:.9rem 1rem">
+        <div style="font-family:'Shippori Mincho',serif;font-size:1rem;font-weight:700;color:#1A1A1A;margin-bottom:.25rem">${label}</div>
+        ${point.cn && point.name !== point.cn ? `<div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#888;letter-spacing:.08em;margin-bottom:.25rem">${point.name}</div>` : ''}
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:${point.animeColor};letter-spacing:.12em;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
+          <span>📍 ${distStr} from destination</span>
+          ${point.ep ? `<span>· Episode ${point.ep}</span>` : ''}
+        </div>
+        ${point.origin ? `<div style="margin-top:.4rem;font-family:'DM Mono',monospace;font-size:.5rem;color:#aaa;letter-spacing:.1em">圖片來源: ${point.origin}</div>` : ''}
+      </div>
+      ${nav}
+    </div>`;
+  popup.onclick = closePopup;
+  popup.querySelector('.fuji-anime-popup').onclick = e => e.stopPropagation();
+}
+
+function navPopup(dir) {
+  popupIdx = Math.max(0, Math.min(popupResults.length-1, popupIdx+dir));
+  renderPopup();
+}
+
+// ═══════════════════════════════════════════
+// DEST BUTTONS
+// ═══════════════════════════════════════════
+function buildDestButtons() {
+  const container = document.getElementById('dest-buttons');
+  if (!container) return;
+  container.innerHTML = DESTINATIONS.map((d,i) => `
+    <button id="db-${i}" onclick="handleDest(${d.lat},${d.lng},${d.day})" style="
+      font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.1em;
+      padding:.25rem .6rem;border:1px solid #E0DDD6;
+      background:#fff;color:#666;cursor:pointer;border-radius:2px;transition:all .2s;
+    ">D${d.day} ${d.name}</button>
+  `).join('');
+}
+
+function updateDestButtons() {
+  DESTINATIONS.forEach((d,i) => {
+    const btn = document.getElementById(`db-${i}`);
+    if (!btn) return;
+    const active = activeDay === d.day;
+    btn.style.border = `1px solid ${active ? DAY_COLORS[d.day] : '#E0DDD6'}`;
+    btn.style.background = active ? `${DAY_COLORS[d.day]}10` : '#fff';
+    btn.style.color = active ? DAY_COLORS[d.day] : '#666';
+  });
+}
+
+// ═══════════════════════════════════════════
+// LEGEND TOGGLE
+// ═══════════════════════════════════════════
+function toggleLegend() {
+  const body = document.getElementById('fuji-legend-body');
+  const arr  = document.getElementById('fuji-legend-arr');
+  body.classList.toggle('open');
+  arr.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════
+// COUNTDOWN
+// ═══════════════════════════════════════════
+function startCountdown() {
+  const pad = n => (n<10?'0':'')+n;
+  function tick() {
+    const target = new Date('2026-07-08T00:55:00+08:00').getTime();
+    const diff = target - Date.now();
+    const set = (id,v) => { const e=document.getElementById(id); if(e) e.textContent=v; };
+    if (diff<=0) { ['fuji-days','fuji-hours','fuji-mins','fuji-secs'].forEach(id=>set(id,'00')); return; }
+    set('fuji-days',  pad(Math.floor(diff/86400000)));
+    set('fuji-hours', pad(Math.floor((diff%86400000)/3600000)));
+    set('fuji-mins',  pad(Math.floor((diff%3600000)/60000)));
+    set('fuji-secs',  pad(Math.floor((diff%60000)/1000)));
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+// ═══════════════════════════════════════════
+// MUSIC
+// ═══════════════════════════════════════════
+let _audio = null, _playing = false;
+function fujiTogglePlay() {
+  if (!_audio) {
+    _audio = new Audio('https://raw.githubusercontent.com/SamuelYuen0201/26inMt-Fuji/main/miku_hajimarinomirai_256kbps.mp3');
+    _audio.loop = true;
+    _audio.volume = 0.72;
+  }
+  const eq = document.getElementById('fuji-eq');
+  const ico = document.getElementById('fuji-play-icon');
+  if (!_playing) {
+    _audio.play().then(() => {
+      _playing = true;
+      if (eq) eq.classList.remove('paused');
+      if (ico) ico.innerHTML = '<rect x="1.5" y="1" width="2.8" height="8" rx="1" fill="white"/><rect x="5.7" y="1" width="2.8" height="8" rx="1" fill="white"/>';
+    }).catch(()=>{});
+  } else {
+    _audio.pause();
+    _playing = false;
+    if (eq) eq.classList.add('paused');
+    if (ico) ico.innerHTML = '<polygon points="2,1 9,5 2,9" fill="white"/>';
+  }
+}
+
+// ═══════════════════════════════════════════
+// CURSOR PARTICLES
+// ═══════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('fuji-miku-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let running = true;
+  const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+  resize();
+  window.addEventListener('resize', resize);
+  const particles = [];
+  const mouse = { x:-999, y:-999, vx:0, vy:0 };
+  const COLORS = ['rgba(57,197,187,','rgba(100,220,215,','rgba(200,240,238,','rgba(255,255,255,','rgba(180,240,235,'];
+  function create(x,y,vx,vy) {
+    const count = Math.min(Math.floor(Math.sqrt(vx*vx+vy*vy)*.4)+1,4);
+    for(let i=0;i<count;i++){
+      const a=Math.random()*Math.PI*2, s=1.5+Math.random()*5;
+      particles.push({
+        x:x+(Math.random()-.5)*10, y:y+(Math.random()-.5)*10,
+        vx:Math.cos(a)*(.3+Math.random()*1.5)+vx*.08, vy:Math.sin(a)*(.3+Math.random()*1.5)+vy*.08-Math.random()*.7,
+        life:1, decay:.012+Math.random()*.018, size:s, maxSize:s,
+        color:COLORS[Math.floor(Math.random()*COLORS.length)], rotation:Math.random()*Math.PI*2, rotSpeed:(Math.random()-.5)*.12,
+      });
+    }
+  }
+  let lastEmit=0;
+  function update(ts) {
+    if(!running) return;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if(mouse.x>0){
+      const g=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,20);
+      g.addColorStop(0,'rgba(57,197,187,.3)'); g.addColorStop(1,'rgba(57,197,187,0)');
+      ctx.beginPath(); ctx.arc(mouse.x,mouse.y,20,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
+    }
+    const speed=Math.sqrt(mouse.vx**2+mouse.vy**2);
+    if(ts-lastEmit>(speed>3?18:40)&&speed>.5){create(mouse.x,mouse.y,mouse.vx,mouse.vy);lastEmit=ts;}
+    for(let i=particles.length-1;i>=0;i--){
+      const p=particles[i];
+      p.x+=p.vx; p.y+=p.vy; p.vy+=.018; p.vx*=.97; p.vy*=.97;
+      p.life-=p.decay; p.rotation+=p.rotSpeed; p.size=p.maxSize*p.life;
+      if(p.life<=0){particles.splice(i,1);continue;}
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rotation);
+      ctx.globalAlpha=p.life; ctx.fillStyle=p.color+p.life+')';
+      ctx.beginPath(); ctx.arc(0,0,p.size,0,Math.PI*2); ctx.fill(); ctx.restore();
+    }
+    requestAnimationFrame(update);
+  }
+  const onMove = e=>{mouse.vx=e.clientX-mouse.x;mouse.vy=e.clientY-mouse.y;mouse.x=e.clientX;mouse.y=e.clientY;};
+  const onTouch= e=>{const t=e.touches[0];mouse.vx=t.clientX-mouse.x;mouse.vy=t.clientY-mouse.y;mouse.x=t.clientX;mouse.y=t.clientY;};
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('touchmove',onTouch,{passive:true});
+  requestAnimationFrame(update);
+})();
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', function() {
+  initMap();
+  startCountdown();
+  buildDestButtons();
+  fetchAnimePoints();
+});
+</script>
+</body>
+</html>
