@@ -1,3 +1,3 @@
 Welcome.
-Here's the code of my solo trip to Mt-Fuji personal website.
+code of my solo trip website.
 samuelyuen.com/mt-fuji
